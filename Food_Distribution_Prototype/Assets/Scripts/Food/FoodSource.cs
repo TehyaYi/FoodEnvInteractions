@@ -22,11 +22,12 @@ public class FoodSource
 
 }
 
-public enum FoodSourceType { Space_Maple, Fruit_Tree,  }
+public enum FoodSourceType { Space_Maple, Fruit_Tree, Arid_Bush }
 
 struct FoodSources
 {
     public static readonly string SPACE_MAPLE_TILE_NAME = "Space_Maple_Good_Top_Left";
     public static readonly string FRUIT_TREE_TILE_NAME = "Fruit_Tree_Good_Top_Left";
+    public static readonly string ARID_BUSH_TILE_NAME = "Arid_Bush";
 }
 

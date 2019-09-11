@@ -28,9 +28,25 @@ public class CameraController : MonoBehaviour
 
 
         Camera camera = cameraTransform.GetComponent<Camera>();
-        float cameraSizeModifier = (_invertedZoomScroll ? 1f : -1f) * Input.mouseScrollDelta.y * Time.deltaTime * Mathf.Clamp(_zoomSensitivity, 0, float.MaxValue);
-        float newCameraSize = Mathf.Clamp(camera.orthographicSize + cameraSizeModifier, 0.1f, float.MaxValue);
+        float cameraSizeModifier = 0;
+        float newCameraSize = camera.orthographicSize;
+
+        if (Input.GetKey(KeyCode.Equals) || Input.GetKey(KeyCode.Minus))
+        {
+            if (Input.GetKey(KeyCode.Equals))
+            {
+                cameraSizeModifier -= Time.deltaTime * _zoomSensitivity;
+            }
+            else
+            {
+                cameraSizeModifier += Time.deltaTime * _zoomSensitivity;
+            }
+        }
+        else
+        {
+            cameraSizeModifier = (_invertedZoomScroll ? 1f : -1f) * Input.mouseScrollDelta.y * Time.deltaTime * Mathf.Clamp(_zoomSensitivity, 0, float.MaxValue);
+        }
+        newCameraSize = Mathf.Clamp(camera.orthographicSize + cameraSizeModifier, 0.1f, float.MaxValue);
         camera.orthographicSize = newCameraSize;
-        
     }
 }

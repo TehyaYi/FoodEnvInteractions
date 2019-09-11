@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TileMap_75
+  m_Name: Arid_Bush
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 2109186341086125266, guid: ce2cf3f588fad994b877f945f129448c,
     type: 3}

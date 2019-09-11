@@ -19,6 +19,12 @@ public class Strot : Animal
             {5f , NeedCondition.Bad},
             {10f, NeedCondition.Neutral},
             {float.MaxValue, NeedCondition.Good}
+        }),
+        new NeedF("Arid_Bush", new SortedDictionary<float, NeedCondition>()
+        {
+            {5f , NeedCondition.Bad},
+            {10f, NeedCondition.Neutral},
+            {float.MaxValue, NeedCondition.Good}
         })
     };
 }

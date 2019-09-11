@@ -31,9 +31,6 @@ public class FoodDistributionScript : MonoBehaviour
                         
             foreach(AnimalPopulation animalPopulation in animalsThatCanConsumeFoodSource)
             {
-                Debug.Log("(float) animalPopulation.PopulationDominance(): " + (float)animalPopulation.PopulationDominance());
-                Debug.Log("(float) totalDominance): " + (float)totalDominance);
-                Debug.Log("foodSource.Output: " + foodSource.Output);
                 float populationFood = ((float) animalPopulation.PopulationDominance() / (float) totalDominance) * foodSource.Output;
                 float foodPerIndividual = populationFood / (float) animalPopulation.PopulationSize;
                 animalPopulation.FoodPerIndividual += foodPerIndividual;

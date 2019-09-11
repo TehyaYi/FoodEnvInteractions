@@ -41,6 +41,10 @@ public class FoodSourceTileMapScript : MonoBehaviour
                     {
                         foodSources.Add(new FruitTree());
                     }
+                    else if(tile.name == FoodSources.ARID_BUSH_TILE_NAME)
+                    {
+                        foodSources.Add(new AridBush());
+                    }
                 }
             }
         }
