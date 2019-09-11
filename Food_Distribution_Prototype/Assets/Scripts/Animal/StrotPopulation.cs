@@ -7,7 +7,7 @@ public class StrotPopulation : AnimalPopulation
     private List<Strot> _strots;
 
 
-    public StrotPopulation() : base(Strot.name, Strot.dominance, Strot.edibleFoodSources)
+    public StrotPopulation() : base(Strot.name, Strot.dominance, Strot.needs)
     {
         _strots = new List<Strot>();
     }

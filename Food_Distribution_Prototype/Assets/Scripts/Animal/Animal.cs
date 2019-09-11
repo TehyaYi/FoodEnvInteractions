@@ -8,13 +8,12 @@ public abstract class Animal
     public float AvailableFood;
     public readonly string Name;
     public readonly int Dominance;
-    public readonly HashSet<FoodSourceType> EdibleFoodSources;
+    public readonly List<Need> Needs;
 
-    protected Animal(string name, int dominance, HashSet<FoodSourceType> edibleFoodSources)
+    protected Animal(string name, int dominance, List<Need> needs)
     {
         this.Name = name;
         this.Dominance = dominance;
-        this.EdibleFoodSources = edibleFoodSources;
+        this.Needs = needs;
     }
-
 }

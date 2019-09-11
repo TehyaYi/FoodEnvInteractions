@@ -7,7 +7,7 @@ public class MadlePopulation : AnimalPopulation
     private List<Strot> _madles;
 
 
-    public MadlePopulation() : base(Madle.name, Madle.dominance, Madle.edibleFoodSources)
+    public MadlePopulation() : base(Madle.name, Madle.dominance, Madle.needs )
     {
         _madles = new List<Strot>();
     }

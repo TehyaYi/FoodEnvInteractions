@@ -7,7 +7,7 @@ abstract public class AnimalPopulation
 {
     public readonly string AnimalName;
     public readonly int AnimalDominance;
-    public readonly HashSet<FoodSourceType> AnimalEdibleFoodSourceTypes;
+    public readonly List<Need> Needs;
 
     public abstract List<Animal> Animals { get; }
     public int PopulationSize { get { return Animals.Count; } }
@@ -25,18 +25,18 @@ abstract public class AnimalPopulation
 
     public abstract void AddAnimal(GameObject animal);
 
-    protected AnimalPopulation(string animalName, int animalDominance, HashSet<FoodSourceType> animalEdibleFoodSourceTypes)
+    protected AnimalPopulation(string animalName, int animalDominance, List<Need> needs)
     {
         this.AnimalName = animalName;
         this.AnimalDominance = animalDominance;
-        this.AnimalEdibleFoodSourceTypes = animalEdibleFoodSourceTypes;
+        this.Needs = needs;
     }
 
     public bool IsEdible(FoodSource foodSource)
     {
-        foreach(FoodSourceType edibleFoodSourceType in AnimalEdibleFoodSourceTypes)
+        foreach(Need need in Needs)
         {
-            if (edibleFoodSourceType == foodSource.Type)
+            if (need.Name == foodSource.Name)
             {
                 return true;
             }

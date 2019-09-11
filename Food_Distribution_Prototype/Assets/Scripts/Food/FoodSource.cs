@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 public class FoodSource
 {
+    public readonly string Name;
     public readonly int BaseOutput;
     public readonly FoodSourceType Type;
 
     private float _output;
     public float Output { get; set; }
 
-    protected FoodSource(int baseOutput, FoodSourceType foodSourceType)
+    protected FoodSource(string name, int baseOutput, FoodSourceType foodSourceType)
     {
+        this.Name = name;
         this.BaseOutput = baseOutput;
         this.Type = foodSourceType;
 
