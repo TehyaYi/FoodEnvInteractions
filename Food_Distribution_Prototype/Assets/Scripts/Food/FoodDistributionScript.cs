@@ -35,7 +35,6 @@ public class FoodDistributionScript : MonoBehaviour
                     animalsThatCanConsumeFoodSource.Add(animalPopulation);
                 }
             }
-            
             // Calculate the FoodPerIndividual score for each animal population.
             foreach(AnimalPopulation animalPopulation in animalsThatCanConsumeFoodSource)
             {

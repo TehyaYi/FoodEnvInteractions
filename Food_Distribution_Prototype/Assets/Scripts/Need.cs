@@ -28,10 +28,8 @@ public abstract class Need<T> : Need
 
     protected Need() { }
 
-
     // The condition of a need should only ever be updated based on the value of the need.
     protected abstract void UpdateCurrentCondition(T value);
 }
-
 
 public enum NeedCondition { Bad, Neutral, Good }

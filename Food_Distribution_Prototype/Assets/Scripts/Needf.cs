@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 public class NeedF : Need<float>
 {
-    public static readonly string name;
+    private readonly string name;
     private readonly SortedDictionary<float, NeedCondition> _needConditions;
 
     public NeedF(string name, SortedDictionary<float, NeedCondition> needConditions)
     {
+        this.name = name;
         _needConditions = needConditions;
     }
 

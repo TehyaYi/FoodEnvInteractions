@@ -5,18 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    private readonly float _cameraSpeed;
+    private float _cameraSpeed;
     [SerializeField]
-    private readonly bool _invertedZoomScroll;
+    private bool _invertedZoomScroll;
     [SerializeField]
     [Range(20,100)]
-    private readonly float _zoomSensitivity;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float _zoomSensitivity;
 
     // Update is called once per frame
     void Update()

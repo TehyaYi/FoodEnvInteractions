@@ -8,16 +8,9 @@ public class FoodSourceTileMapScript : MonoBehaviour
     private Tilemap tileMap;
     private TileBase[] tiles;
 
-    // Start is called before the first frame update
     void Awake()
     {
         tileMap = this.GetComponent<Tilemap>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // Detects all foodsource tiles and place

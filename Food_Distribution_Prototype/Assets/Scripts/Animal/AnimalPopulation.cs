@@ -32,6 +32,7 @@ abstract public class AnimalPopulation
     {
         foreach(Need need in Needs)
         {
+            Debug.Log("need.Name: " + need.Name + " foodSource.Name: " + foodSource.Name);
             if (need.Name == foodSource.Name)
             {
                 return true;
