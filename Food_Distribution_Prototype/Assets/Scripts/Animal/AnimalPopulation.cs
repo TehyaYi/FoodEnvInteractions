@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Animal populations are holders of animals that also contain information about the animals.
 abstract public class AnimalPopulation
 {
-    public readonly string AnimalName;
-    public readonly int AnimalDominance;
-    public readonly List<Need> Needs;
+    public abstract string AnimalName { get; }
+    public abstract int AnimalDominance { get; }
+    public abstract List<Need> Needs { get; }
 
     public abstract List<Animal> Animals { get; }
     public int PopulationSize { get { return Animals.Count; } }
@@ -23,15 +24,10 @@ abstract public class AnimalPopulation
       }
     }
 
+    protected AnimalPopulation() { }
+
     public abstract void AddAnimal(GameObject animal);
-
-    protected AnimalPopulation(string animalName, int animalDominance, List<Need> needs)
-    {
-        this.AnimalName = animalName;
-        this.AnimalDominance = animalDominance;
-        this.Needs = needs;
-    }
-
+    
     public bool IsEdible(FoodSource foodSource)
     {
         foreach(Need need in Needs)

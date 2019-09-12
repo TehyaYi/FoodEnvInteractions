@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SpaceMaple : FoodSource
 {
-    // Why do these have to be static?
     public static readonly string name = "Space_Maple";
-    private static readonly int _baseOutput = 25;
-    private static readonly FoodSourceType _foodSourceType = FoodSourceType.Space_Maple;
+    public static readonly int baseOutput = 25;
+    private readonly FoodSourceType _foodSourceType = FoodSourceType.Space_Maple;
 
-    public SpaceMaple() : base(name, _baseOutput, _foodSourceType)
-    {
+    public SpaceMaple(Vector2 position, float output) : base(output) { }
 
-    }
+    public override FoodSourceType Type { get { return _foodSourceType; } }
+
+    public override string Name { get { return name; } }
+
+    public override int BaseOutput { get { return baseOutput; } }
 }

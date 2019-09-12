@@ -20,6 +20,7 @@ public class FoodSourceTileMapScript : MonoBehaviour
         
     }
 
+    // Detects all foodsource tiles and place
     public List<FoodSource> getFoodSources()
     {
         BoundsInt bounds = tileMap.cellBounds;
@@ -31,19 +32,20 @@ public class FoodSourceTileMapScript : MonoBehaviour
             for (int y = 0; y < bounds.size.y; y++)
             {
                 TileBase tile = tiles[x + y * bounds.size.x];
+                Vector2 tilePosition = new Vector2(x, y);
                 if (tile != null)
                 {
-                    if (tile.name == FoodSources.SPACE_MAPLE_TILE_NAME)
+                    if (tile.name == FoodSourceTileNames.SPACE_MAPLE_TILE_NAME)
                     {
-                        foodSources.Add(new SpaceMaple());
+                        foodSources.Add(new SpaceMaple(tilePosition, SpaceMaple.baseOutput)); // 1 TODO: second argument of constructors is where their modified outputs should go.
                     }
-                    else if(tile.name == FoodSources.FRUIT_TREE_TILE_NAME)
+                    else if(tile.name == FoodSourceTileNames.FRUIT_TREE_TILE_NAME)
                     {
-                        foodSources.Add(new FruitTree());
+                        foodSources.Add(new FruitTree(tilePosition, FruitTree.baseOutput)); // 2
                     }
-                    else if(tile.name == FoodSources.ARID_BUSH_TILE_NAME)
+                    else if(tile.name == FoodSourceTileNames.ARID_BUSH_TILE_NAME)
                     {
-                        foodSources.Add(new AridBush());
+                        foodSources.Add(new AridBush(tilePosition, AridBush.baseOutput)); // 3
                     }
                 }
             }
