@@ -8,12 +8,10 @@ public abstract class Animal
     public float AvailableFood;
     public readonly string Name;
     public readonly int Dominance;
-    public readonly List<Need> Needs;
 
-    protected Animal(string name, int dominance, List<Need> needs)
+    protected Animal(string name, int dominance)
     {
         this.Name = name;
         this.Dominance = dominance;
-        this.Needs = needs;
     }
 }

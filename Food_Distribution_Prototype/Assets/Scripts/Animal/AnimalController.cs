@@ -32,9 +32,18 @@ public class AnimalController : MonoBehaviour
 
     void Update()
     {
-        foreach (Animal animal in animals)
+        foreach (AnimalPopulation animalPopulation in animalPopulations)
         {
-            animal.gameObject.GetComponentInChildren<Text>().text = animal.AvailableFood.ToString(); // TODO: 
+            foreach(Animal animal in animalPopulation.Animals)
+            {
+                string text = "";
+                foreach(Need need in animalPopulation.Needs)
+                {
+                    string needText = need.Name + ": " + need.CurrentCondition + ", " + ((Need<float>)need).CurrentValue;
+                    text += needText + "\n";
+                }
+                animal.gameObject.GetComponentInChildren<Text>().text = text;
+            }
         }
     }
 

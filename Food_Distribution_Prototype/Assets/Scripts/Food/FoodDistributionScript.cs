@@ -40,7 +40,8 @@ public class FoodDistributionScript : MonoBehaviour
             {
                 float populationFood = ((float) animalPopulation.PopulationDominance() / (float) totalDominance) * foodSource.Output;
                 float foodPerIndividual = populationFood / (float) animalPopulation.PopulationSize;
-                animalPopulation.FoodPerIndividual += foodPerIndividual;
+                Need<float> foodSourceNeed = (Need<float>)animalPopulation.GetNeed(foodSource.Type);
+                foodSourceNeed.CurrentValue += foodPerIndividual;
             }
         }
     }

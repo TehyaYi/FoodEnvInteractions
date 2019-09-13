@@ -5,6 +5,7 @@ using System.Collections.Generic;
 // Implements behavior and properties all the types of needs should have.
 public abstract class Need
 {
+    public abstract NeedType Type { get; }
     public abstract string Name { get; }
     private NeedCondition _currentCondition;
     public NeedCondition CurrentCondition { get { return _currentCondition; } protected set { _currentCondition = value; } }
@@ -21,8 +22,8 @@ public abstract class Need<T> : Need
     // When _currentValue changes, the current condition of the need should be updated.
     public T CurrentValue { get { return _currentValue; }
         set {
-            _currentValue = value;
-            UpdateCurrentCondition(value);
+                _currentValue = value;
+                UpdateCurrentCondition(value);
             }
     }
 
@@ -33,3 +34,5 @@ public abstract class Need<T> : Need
 }
 
 public enum NeedCondition { Bad, Neutral, Good }
+
+public enum NeedType { Space_Maple, Fruit_Tree, Arid_Bush }

@@ -12,18 +12,29 @@ public class CameraController : MonoBehaviour
     [Range(20,100)]
     private float _zoomSensitivity;
 
+    private Camera _camera;
+
+    private void Start()
+    {
+        _camera = GetComponent<Camera>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        Transform cameraTransform = transform;
-        Vector3 newPosition = cameraTransform.position;
-        newPosition += new Vector3(Input.GetAxisRaw("Horizontal") * _cameraSpeed * Time.deltaTime, Input.GetAxisRaw("Vertical") * _cameraSpeed * Time.deltaTime, 0);
-        cameraTransform.position = newPosition;
+        float size = ModifySize();
+        float sizeSpeedMultiplier = 0.25f * size;
 
+        Vector3 newPosition = transform.position;
+        newPosition += new Vector3(Input.GetAxisRaw("Horizontal") * _cameraSpeed * Time.deltaTime * sizeSpeedMultiplier, 
+                                    Input.GetAxisRaw("Vertical") * _cameraSpeed * Time.deltaTime * sizeSpeedMultiplier, 0);
+        transform.position = newPosition;
+    }
 
-        Camera camera = cameraTransform.GetComponent<Camera>();
+    private float ModifySize()
+    {
         float cameraSizeModifier = 0;
-        float newCameraSize = camera.orthographicSize;
+        float newCameraSize = _camera.orthographicSize;
 
         if (Input.GetKey(KeyCode.Equals) || Input.GetKey(KeyCode.Minus))
         {
@@ -40,7 +51,8 @@ public class CameraController : MonoBehaviour
         {
             cameraSizeModifier = (_invertedZoomScroll ? 1f : -1f) * Input.mouseScrollDelta.y * Time.deltaTime * Mathf.Clamp(_zoomSensitivity, 0, float.MaxValue);
         }
-        newCameraSize = Mathf.Clamp(camera.orthographicSize + cameraSizeModifier, 0.1f, float.MaxValue);
-        camera.orthographicSize = newCameraSize;
+        newCameraSize = Mathf.Clamp(_camera.orthographicSize + cameraSizeModifier, 0.1f, float.MaxValue);
+        _camera.orthographicSize = newCameraSize;
+        return _camera.orthographicSize;
     }
 }
