@@ -36,11 +36,12 @@ public class FoodDistributionScript : MonoBehaviour
                 }
             }
             // Calculate the FoodPerIndividual score for each animal population.
-            foreach(AnimalPopulation animalPopulation in animalsThatCanConsumeFoodSource)
+            foreach (AnimalPopulation animalPopulation in animalsThatCanConsumeFoodSource)
             {
-                float populationFood = ((float) animalPopulation.PopulationDominance() / (float) totalDominance) * foodSource.Output;
-                float foodPerIndividual = populationFood / (float) animalPopulation.PopulationSize;
-                animalPopulation.FoodPerIndividual += foodPerIndividual;
+                float populationFood = ((float)animalPopulation.PopulationDominance() / (float)totalDominance) * foodSource.Output;
+                float foodPerIndividual = populationFood / (float)animalPopulation.PopulationSize;
+                Need<float> foodSourceNeed = (Need<float>)animalPopulation.GetNeed(foodSource.Type);
+                foodSourceNeed.CurrentValue += foodPerIndividual;
             }
         }
     }

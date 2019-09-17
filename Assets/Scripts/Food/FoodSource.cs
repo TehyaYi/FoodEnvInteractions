@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class FoodSource
 {
-    public abstract FoodSourceType Type { get; }
+    public abstract NeedType Type { get; }
     public abstract string Name { get; }
     public abstract int BaseOutput { get; }
 
@@ -19,9 +19,6 @@ public abstract class FoodSource
     }
 
 }
-
-// Types of food sources
-public enum FoodSourceType { Arid_Bush, Berry_Bush, Berry_Tree, Fruit_Tree, Leaf_Tree, Leafy_Bush, Space_Maple, Tallgrass }
 
 // Names of the tiles that represent a food source
 struct FoodSourceTileNames

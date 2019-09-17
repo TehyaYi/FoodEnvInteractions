@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MadlePopulation : AnimalPopulation
 {
-    private List<Strot> _madles;
+    private List<Madle> _madles;
 
 
     public MadlePopulation()
     {
-        _madles = new List<Strot>();
+        _madles = new List<Madle>();
     }
 
     public override string AnimalName { get { return Madle.name; } }
@@ -23,7 +23,7 @@ public class MadlePopulation : AnimalPopulation
 
     public override void AddAnimal(GameObject animal)
     {
-        Strot madle = new Strot(animal);
+        Madle madle = new Madle(animal);
         _madles.Add(madle);
     }
 

@@ -6,11 +6,11 @@ public class LeafyBush : FoodSource
 {
     public static readonly string name = "Leafy_Bush";
     public static readonly int baseOutput = 10;
-    private readonly FoodSourceType _foodSourceType = FoodSourceType.Leafy_Bush;
+    private readonly NeedType _foodSourceType = NeedType.Leafy_Bush;
 
     public LeafyBush(Vector2 position, float output) : base(output) { }
 
-    public override FoodSourceType Type { get { return _foodSourceType; } }
+    public override NeedType Type { get { return _foodSourceType; } }
 
     public override string Name { get { return name; } }
 

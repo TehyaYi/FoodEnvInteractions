@@ -6,11 +6,11 @@ public class LeafTree : FoodSource
 {
     public static readonly string name = "Leaf_Tree";
     public static readonly int baseOutput = 20;
-    private readonly FoodSourceType _foodSourceType = FoodSourceType.Leaf_Tree;
+    private readonly NeedType _foodSourceType = NeedType.Leaf_Tree;
 
     public LeafTree(Vector2 position, float output) : base(output) { }
 
-    public override FoodSourceType Type { get { return _foodSourceType; } }
+    public override NeedType Type { get { return _foodSourceType; } }
 
     public override string Name { get { return name; } }
 
