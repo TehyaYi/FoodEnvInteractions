@@ -19,6 +19,7 @@ public class FoodSourceTileMapScript : MonoBehaviour
     BerryBushCalc BerryBushCalc;
     AridBushCalc AridBushCalc;
     LeafyBushCalc LeafyBushCalc;
+    SeaWeedCalc SeaWeedCalc;
     [SerializeField] Canvas Canvas;
     [SerializeField] GameObject FoodSourceOutput;
     [SerializeField] int xVal;
@@ -39,6 +40,7 @@ public class FoodSourceTileMapScript : MonoBehaviour
         BerryBushCalc = new BerryBushCalc();
         AridBushCalc = new AridBushCalc();
         LeafyBushCalc = new LeafyBushCalc();
+        SeaWeedCalc = new SeaWeedCalc();
     }
 
     // Detects all foodsource tiles and place
@@ -115,6 +117,15 @@ public class FoodSourceTileMapScript : MonoBehaviour
                     }
                 }
             }
+        }
+
+        // Seaweed is an object in the scene instead of a tile
+        foreach (GameObject SeaWeed in GameObject.FindGameObjectsWithTag("SeaWeed"))
+        {
+            Liquid comp = SeaWeed.GetComponentInParent<Liquid>();
+            int modifiedOutput = SeaWeedCalc.modifyOutput(comp.blue, comp.green, xVal, yVal, tempVal, lightVal);
+            foodSources.Add(new SeaWeed(SeaWeed.transform.position, modifiedOutput));
+            SeaWeed.GetComponentInChildren<Text>().text = modifiedOutput.ToString();
         }
 
         return foodSources;

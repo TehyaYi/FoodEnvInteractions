@@ -7,6 +7,7 @@ TagManager:
   - Madle
   - Strot
   - Animal
+  - SeaWeed
   layers:
   - Default
   - TransparentFX

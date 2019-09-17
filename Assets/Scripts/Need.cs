@@ -38,4 +38,4 @@ public abstract class Need<T> : Need
 
 public enum NeedCondition { Bad, Neutral, Good }
 
-public enum NeedType { Arid_Bush, Berry_Bush, Berry_Tree, Fruit_Tree, Leaf_Tree, Leafy_Bush, Space_Maple, Tallgrass, Gas_X, Gas_Y, Gas_Z, Temperature, Light }
+public enum NeedType { Arid_Bush, Berry_Bush, Berry_Tree, Fruit_Tree, Leaf_Tree, Leafy_Bush, Space_Maple, Tallgrass, SeaWeed, Gas_X, Gas_Y, Gas_Z, Temperature, Light }
