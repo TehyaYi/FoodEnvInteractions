@@ -39,6 +39,7 @@ public class AnimalController : MonoBehaviour
                 string text = "";
                 foreach (Need need in animalPopulation.Needs)
                 {
+                    Debug.Log(((Need<float>)need).CurrentValue);
                     string needText = need.Name + ": " + need.CurrentCondition + ", " + ((Need<float>)need).CurrentValue;
                     text += needText + "\n";
                 }

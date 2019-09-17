@@ -40,6 +40,12 @@ public class MadlePopulation : AnimalPopulation
             {5f , NeedCondition.Bad},
             {10f, NeedCondition.Neutral},
             {float.MaxValue, NeedCondition.Good}
+        }),
+        new NeedF(NeedType.Leaf_Tree, "Leaf_Tree", new SortedDictionary<float, NeedCondition>()
+        {
+            {30f , NeedCondition.Bad},
+            {50f, NeedCondition.Neutral},
+            {float.MaxValue, NeedCondition.Good}
         })
     };
 }
