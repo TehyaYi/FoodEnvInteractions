@@ -123,7 +123,7 @@ public class FoodSourceTileMapScript : MonoBehaviour
         foreach (GameObject SeaWeed in GameObject.FindGameObjectsWithTag("SeaWeed"))
         {
             Liquid comp = SeaWeed.GetComponentInParent<Liquid>();
-            int modifiedOutput = SeaWeedCalc.modifyOutput(comp.blue, comp.green, xVal, yVal, tempVal, lightVal);
+            int modifiedOutput = SeaWeedCalc.modifyOutput((int)comp.red, (int)comp.green, (int)comp.blue, xVal, yVal, tempVal, lightVal);
             foodSources.Add(new SeaWeed(SeaWeed.transform.position, modifiedOutput));
             SeaWeed.GetComponentInChildren<Text>().text = modifiedOutput.ToString();
         }

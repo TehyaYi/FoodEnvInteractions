@@ -45,13 +45,11 @@ public class GrowthDeclineScript : MonoBehaviour
                 {
                     Animal deadAnimal = animalPopulation.RemoveRandomAnimal();
                     Destroy(deadAnimal.gameObject);
-                    Debug.Log(animalPopulation.AnimalName + " died");
                 }
                 else if(numGood > 0)
                 {
                     Vector2 position = new Vector2(Random.Range(AnimalController.SpawnMin.x, AnimalController.SpawnMax.x), Random.Range(AnimalController.SpawnMin.y, AnimalController.SpawnMax.y));
                     animalPopulation.AddAnimalFromGameObject(AnimalController.CreateAnimal(animalPopulation.AnimalName, position));
-                    Debug.Log(animalPopulation.AnimalName + " born");
                 }
             }
         }
