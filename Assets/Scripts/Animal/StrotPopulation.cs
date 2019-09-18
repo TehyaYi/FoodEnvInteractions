@@ -20,11 +20,22 @@ public class StrotPopulation : AnimalPopulation
 
     public override List<Animal> Animals { get { return new List<Animal>(_strots); } }
 
+    private readonly int _populationGoal = 50;
+    public override int PopulationGoal { get { return _populationGoal; } }
 
-    public override void AddAnimal(GameObject animal)
+    public override void AddAnimalFromGameObject(GameObject animal)
     {
         Strot strot = new Strot(animal);
         _strots.Add(strot);
+    }
+
+    public override Animal RemoveRandomAnimal()
+    {
+        if (_strots.Count == 0) return null;
+        int randomIndex = (int)Mathf.Floor(UnityEngine.Random.Range(0, _strots.Count));
+        Animal removedAnimal = _strots[randomIndex];
+        _strots.RemoveAt(randomIndex);
+        return removedAnimal;
     }
 
     public static readonly List<Need> needs = new List<Need>()

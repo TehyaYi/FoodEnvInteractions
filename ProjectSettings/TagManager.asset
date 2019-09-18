@@ -7,6 +7,7 @@ TagManager:
   - Madle
   - Strot
   - Animal
+  - AnimalStats
   layers:
   - Default
   - TransparentFX

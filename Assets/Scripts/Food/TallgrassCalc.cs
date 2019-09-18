@@ -55,21 +55,15 @@ public class TallgrassCalc
         float terrainResult = needResult(terrain, terrainScore, "terrain");
         modifiedOutput += terrainResult;
 
-        Debug.Log("modified output: " + modifiedOutput);
-
         float yResult = needResult(y, yVal, "y");
         modifiedOutput += yResult;
-        Debug.Log("modified output: " + modifiedOutput);
 
         float tempResult = needResult(temp, tempVal, "temp");
         modifiedOutput += tempResult;
-        Debug.Log("modified output: " + modifiedOutput);
 
         float lightResult = needResult(light, lightVal, "light");
         modifiedOutput += lightResult;
-        Debug.Log("modified output: " + modifiedOutput);
 
-        //print("MOD OUTPUT IS: " + modifiedOutput);
         return ((int)Mathf.Floor(modifiedOutput));
     }
 
@@ -77,23 +71,16 @@ public class TallgrassCalc
     {
         float modifier = 0;
 
-        Debug.Log("needDict: " + needDict);
-        Debug.Log("value: " + value);
-        Debug.Log("needWeight: " + needWeight);
-
         if (value >= needDict["bad"][0] && value <= needDict["bad"][1] || value >= needDict["bad"][2] && value <= needDict["bad"][3])
         {
             modifier = -((weights[needWeight] / totalWeight) * baseOutput);
-            Debug.Log("modifier bad: " + modifier);
         }
 
         if (value >= needDict["good"][0] && value <= needDict["good"][1] || value >= needDict["good"][2] && value <= needDict["good"][3])
         {
             modifier = (weights[needWeight] / totalWeight) * baseOutput;
-            Debug.Log("modifier good: " + modifier);
         }
 
-        Debug.Log("returning: " + modifier);
         return modifier;
 
     }

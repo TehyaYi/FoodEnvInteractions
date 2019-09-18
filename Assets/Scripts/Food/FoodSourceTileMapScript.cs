@@ -145,7 +145,6 @@ public class FoodSourceTileMapScript : MonoBehaviour
                 m = 2;
                 break;
         }
-        print("n is: " + n + " and m is: " + m);
         for (int i = 0; i < n; i++)
         {
             for(int j = 0; j < m; j++)
@@ -171,8 +170,6 @@ public class FoodSourceTileMapScript : MonoBehaviour
                 }
             }
         }
-
-        print("Sand: " + sand + "Grass: " + grass + "Dirt: " + dirt + "Rock: " + rock);
 
         Dictionary<string, int> tiles = new Dictionary<string, int>();
         tiles.Add("sand", sand);

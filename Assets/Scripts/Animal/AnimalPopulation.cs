@@ -8,14 +8,26 @@ abstract public class AnimalPopulation
 {
     public abstract string AnimalName { get; }
     public abstract int AnimalDominance { get; }
+    public abstract int PopulationGoal { get; }
     public abstract List<Need> Needs { get; }
 
     public abstract List<Animal> Animals { get; }
     public int PopulationSize { get { return Animals.Count; } }
 
+    public float GrowthTimer;
+
     protected AnimalPopulation() { }
 
-    public abstract void AddAnimal(GameObject animal);
+    /// <summary>
+    /// Adds a new animal to the list of animals.
+    /// </summary>
+    /// <param name="animal"></param>
+    public abstract void AddAnimalFromGameObject(GameObject animal);
+
+    /// <summary>
+    /// Removes a random animal from the list of animals and returns the animal. If there are no animals to remove, there is no effect and null is returned.
+    /// </summary>
+    public abstract Animal RemoveRandomAnimal();
 
     public bool IsEdible(FoodSource foodSource)
     {
@@ -49,8 +61,10 @@ abstract public class AnimalPopulation
             throw new NotSupportedException(animalName + " species is not supported");
         }
     }
-
-    // Returns the need of the NeedType provided or null if it doesn't exist.
+    /// <summary>
+    /// Returns the need of the NeedType provided or null if it doesn't exist.
+    /// </summary>
+    /// <param name="needType">The type of need to be searched for.</param>
     public Need GetNeed(NeedType needType)
     {
         foreach (Need need in Needs)
