@@ -9,13 +9,6 @@ public class SeaWeedCalc
     private float totalWeight = 10;
     private Vector2 position;
 
-    private Dictionary<string, int[]> red = new Dictionary<string, int[]>()
-    {
-        { "bad", new int[] { -1, -1, -1, -1 } },
-        { "mod", new int[] { 0, 49, -1, -1 } },
-        { "good", new int[] { 50, 100, -1, -1 } }
-    };
-
     private Dictionary<string, int[]> green = new Dictionary<string, int[]>()
     {
         { "bad", new int[] { -1, -1, -1, -1 } },
@@ -58,7 +51,6 @@ public class SeaWeedCalc
     };
     private Dictionary<string, float> weights = new Dictionary<string, float>()
     {
-        { "red", 3 },
         { "blue", 3},
         { "green", 3 },
         { "x", 1 },
@@ -68,12 +60,9 @@ public class SeaWeedCalc
     };
 
 
-    public int modifyOutput(int redVal, int greenVal, int blueVal, int xVal, int yVal, int tempVal, int lightVal)
+    public int modifyOutput(int greenVal, int blueVal, int xVal, int yVal, int tempVal, int lightVal)
     {
         float modifiedOutput = baseOutput;
-
-        float redResult = needResult(red, redVal, "red");
-        modifiedOutput += redResult;
 
         float blueResult = needResult(blue, blueVal, "blue");
         modifiedOutput += blueResult;
