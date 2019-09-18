@@ -16,7 +16,25 @@ public class FoodDistributionScript : MonoBehaviour
 
         // Get the list of food sources in the reserve.
         foodSources = foodSourceTileMapScript.getFoodSources();
-        Debug.Log("Number of food sources: " + foodSources.Count);
+
+        UpdateFoodNeeds();
+    }
+
+    public void UpdateFoodNeeds()
+    {
+        // Reset food needs values
+        foreach (FoodSource foodSource in foodSources)
+        {
+            foreach (AnimalPopulation animalPopulation in animalController.GetAnimalPopulations())
+            {
+                Need<float> foodSourceNeed = (Need<float>)animalPopulation.GetNeed(foodSource.Type);
+                if (foodSourceNeed != null)
+                {
+                    foodSourceNeed.CurrentValue = 0f;
+                }
+            }
+        }
+
         foreach (FoodSource foodSource in foodSources)
         {
             int totalDominance = 0;
@@ -41,6 +59,7 @@ public class FoodDistributionScript : MonoBehaviour
                 float populationFood = ((float)animalPopulation.PopulationDominance() / (float)totalDominance) * foodSource.Output;
                 float foodPerIndividual = populationFood / (float)animalPopulation.PopulationSize;
                 Need<float> foodSourceNeed = (Need<float>)animalPopulation.GetNeed(foodSource.Type);
+                //Debug.Log(foodSourceNeed.CurrentValue);
                 foodSourceNeed.CurrentValue += foodPerIndividual;
             }
         }

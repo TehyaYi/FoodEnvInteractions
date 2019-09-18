@@ -5,8 +5,22 @@ using UnityEngine.UI;
 
 public class AnimalController : MonoBehaviour
 {
+    [SerializeField]
+    private Vector2 SpawnMinSet;
+    public static Vector2 SpawnMin;
+    [SerializeField]
+    private Vector2 SpawnMaxSet;
+    public static Vector2 SpawnMax;
+    [SerializeField]
+    private bool _displayAnimalStats;
     private List<Animal> animals = new List<Animal>();
     private List<AnimalPopulation> animalPopulations = new List<AnimalPopulation>();
+
+    private void Awake()
+    {
+        SpawnMin = SpawnMinSet;
+        SpawnMax = SpawnMaxSet;
+    }
 
     void Start()
     {
@@ -20,7 +34,7 @@ public class AnimalController : MonoBehaviour
             if (!AddToExistingAnimalPopulation(animalGameObject))
             {
                 AnimalPopulation newAnimalPopulation = AnimalPopulation.BuildAnimalPopulation(animalGameObject.tag);
-                newAnimalPopulation.AddAnimal(animalGameObject);
+                newAnimalPopulation.AddAnimalFromGameObject(animalGameObject);
                 animalPopulations.Add(newAnimalPopulation);
             }
         }
@@ -32,20 +46,23 @@ public class AnimalController : MonoBehaviour
 
     void Update()
     {
-        foreach (AnimalPopulation animalPopulation in animalPopulations)
+        SpawnMin = SpawnMinSet;
+        SpawnMax = SpawnMaxSet;
+
+        if (_displayAnimalStats)
         {
-            foreach (Animal animal in animalPopulation.Animals)
+            UpdateAnimalStats();
+        }
+        else
+        {
+            GameObject[] stats = GameObject.FindGameObjectsWithTag("AnimalStats");
+            foreach (GameObject stat in stats)
             {
-                string text = "";
-                foreach (Need need in animalPopulation.Needs)
-                {
-                    Debug.Log(((Need<float>)need).CurrentValue);
-                    string needText = need.Name + ": " + need.CurrentCondition + ", " + ((Need<float>)need).CurrentValue;
-                    text += needText + "\n";
-                }
-                animal.gameObject.GetComponentInChildren<Text>().text = text;
+                stat.GetComponent<Text>().text = "";
             }
         }
+
+        Debug.DrawLine(SpawnMin, SpawnMax);
     }
 
     private bool AddToExistingAnimalPopulation(GameObject animal)
@@ -54,15 +71,50 @@ public class AnimalController : MonoBehaviour
         {
             if (animal.tag == animalPopulation.AnimalName)
             {
-                animalPopulation.AddAnimal(animal);
+                animalPopulation.AddAnimalFromGameObject(animal);
                 return true;
             }
         }
         return false;
     }
 
+    /// <summary>
+    /// Returns the list of animal populations.
+    /// </summary>
+    /// <returns></returns>
     public List<AnimalPopulation> GetAnimalPopulations()
     {
         return animalPopulations;
+    }
+
+    public static GameObject CreateAnimal(string animalTag, Vector2 position)
+    {
+        if (animalTag == "Madle")
+        {
+            return Instantiate(Resources.Load("Prefabs/Madle"), position, Quaternion.identity) as GameObject;
+        }
+        else if (animalTag == "Strot")
+        {
+            return Instantiate(Resources.Load("Prefabs/Strot"), position, Quaternion.identity) as GameObject;
+        }
+        else throw new System.Exception("Invalid animalTag");
+    }
+
+    private void UpdateAnimalStats()
+    {
+        foreach (AnimalPopulation animalPopulation in animalPopulations)
+        {
+            foreach (Animal animal in animalPopulation.Animals)
+            {
+                string text = "";
+                foreach (Need need in animalPopulation.Needs)
+                {
+                    string needText = need.Name + ": " + need.CurrentCondition + ", " + ((Need<float>)need).CurrentValue;
+                    text += needText + "\n";
+                }
+                animal.gameObject.GetComponentInChildren<Text>().text = text;
+            }
+        }
+
     }
 }
