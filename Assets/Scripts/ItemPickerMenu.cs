@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ItemPickerMenu : MonoBehaviour
 {
@@ -44,5 +45,11 @@ public class ItemPickerMenu : MonoBehaviour
         Time.timeScale = 1f;
         _itemPickerMenu.SetActive(false);
         ItemPickerMenuIsOpen = !ItemPickerMenuIsOpen;
+    }
+
+    public void SelectItem(Tile selectedTile)
+    {
+        TileMapsController tileMapsController = FindObjectOfType<TileMapsController>();
+        tileMapsController.SelectedTile = selectedTile;
     }
 }
