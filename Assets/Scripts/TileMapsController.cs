@@ -30,13 +30,16 @@ public class TileMapsController : MonoBehaviour
             Vector3 initialMouseWorldPosition = Camera.main.ScreenToWorldPoint(initialMousePosition);
             Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+            Vector3 bottomLeft = Vector3.Min(initialMouseWorldPosition, mouseWorldPosition);
+            Vector3 topRight = Vector3.Max(initialMouseWorldPosition, mouseWorldPosition);
+
             BoundsInt bounds = new BoundsInt
             {
-                min = Vector3Int.FloorToInt(initialMouseWorldPosition),
-                max = Vector3Int.CeilToInt(mouseWorldPosition)
+                min = Vector3Int.FloorToInt(bottomLeft),
+                max = Vector3Int.CeilToInt(topRight),
+                zMin = 10,
+                zMax = 9
             };
-            bounds.zMin = 10;
-            bounds.zMax = 9;
 
             if(bounds != lastBounds)
             {
@@ -44,18 +47,9 @@ public class TileMapsController : MonoBehaviour
             }
 
             int size = bounds.size.x * bounds.size.y;
-            if(size == 0)
-            {
-                size = 1;
-            }
-            TileBase[] tileArray = new TileBase[size];
+            size = size == 0 ? 1 : size;
 
-            //BoundsInt bounds = new BoundsInt
-            //{
-            //    min = new Vector3Int(0, 0, 0),
-            //    max = new Vector3Int(2, 2, 1)
-            //};
-            //TileBase[] tileArray = new TileBase[bounds.size.x * bounds.size.y * bounds.size.z];
+            TileBase[] tileArray = new TileBase[size];
 
             for (int i = 0; i < tileArray.Length; i++) tileArray[i] = SelectedTile;
             _tilePlacementPreview.SetTilesBlock(bounds, tileArray);
