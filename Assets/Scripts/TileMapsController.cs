@@ -9,23 +9,62 @@ public class TileMapsController : MonoBehaviour
 {
     public Tile SelectedTile;
 
-    [SerializeField]
-    private Grid _tileMapsGrid;
-    private Tilemap _terrain;
+    [SerializeField] private Tilemap _liquid;
+    [SerializeField] private Tilemap _terrain;
+    [SerializeField] private Tilemap _structures;
+    [SerializeField] private Tilemap _tilePlacementPreview;
 
-    void Start()
-    { 
-        _terrain = _tileMapsGrid.transform.GetChild(1).GetComponent<Tilemap>();
-    }
+    private BoundsInt lastBounds = new BoundsInt();
 
-    void Update()
+    private Vector3 initialMousePosition = Vector3.zero;
+
+    private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            initialMousePosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 initialMouseWorldPosition = Camera.main.ScreenToWorldPoint(initialMousePosition);
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            BoundsInt bounds = new BoundsInt
+            {
+                min = Vector3Int.FloorToInt(initialMouseWorldPosition),
+                max = Vector3Int.CeilToInt(mouseWorldPosition)
+            };
+            bounds.zMin = 10;
+            bounds.zMax = 9;
+
+            if(bounds != lastBounds)
+            {
+                _tilePlacementPreview.ClearAllTiles();
+            }
+
+            int size = bounds.size.x * bounds.size.y;
+            if(size == 0)
+            {
+                size = 1;
+            }
+            TileBase[] tileArray = new TileBase[size];
+
+            //BoundsInt bounds = new BoundsInt
+            //{
+            //    min = new Vector3Int(0, 0, 0),
+            //    max = new Vector3Int(2, 2, 1)
+            //};
+            //TileBase[] tileArray = new TileBase[bounds.size.x * bounds.size.y * bounds.size.z];
+
+            for (int i = 0; i < tileArray.Length; i++) tileArray[i] = SelectedTile;
+            _tilePlacementPreview.SetTilesBlock(bounds, tileArray);
+        }
     }
 
     public void LeftMousePressed()
     {
-        PlaceSelectedTileOnCursor();
+        //PlaceTileOnCursor(SelectedTile);
     }
 
     public void PlaceTile(Vector3Int position, Tile tile)
@@ -35,15 +74,8 @@ public class TileMapsController : MonoBehaviour
 
     public void PlaceTileOnCursor(Tile tile)
     {
-        Vector3Int position = new Vector3Int();
-        Vector3 screenPosition = Input.mousePosition;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 10));
-        position = _terrain.WorldToCell(worldPosition);
+        var worldPosition = TileMapUtils.MouseWorldPosition();
+        var position = _terrain.WorldToCell(worldPosition);
         this.PlaceTile(position, tile);
-    }
-
-    public void PlaceSelectedTileOnCursor()
-    {
-        PlaceTileOnCursor(SelectedTile);
     }
 }
