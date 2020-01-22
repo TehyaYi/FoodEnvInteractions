@@ -4,46 +4,34 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-	//private so that no one edits this
-	public float total_weights; 
-	public float base_output;
-	public string[] needs;
-	public float[] weights;
+	[SerializeField] private float total_weight; 
+	[SerializeField] private float base_output;
+	public string[] needs = {"Terrain", "Red Liquid", "Blue Liquid", "Green Liquid","Black Liquid","Gas X","Gas Y","Gas Z","Temperature","Lighting"};
+	[SerializeField] private float[] weights;
+
 	//Values in conditions[] represents how good 
 	//the needs are met: 0 = bad, 1 = moderate, 2 = good
-	public int[] conditions; 
+	[SerializeField] private int[] conditions; 
 
     //variables for the table
-    public int[] terrain_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] red_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] blue_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] green_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] black_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] gasX_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] gasY_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] gasZ_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
-    public int[] temperature_ranges = new int[3]; // val = |temp_given - middle(radius)| [furthest from radius, middle range from radius, closest to radius]
-    public int[] lighting_ranges = new int[3]; // val = |lighting_given - middle(radius)| [furthest from radius, middle range from radius, closest to radius]
-
-    public int terrain_weight;
-    public int red_liquid_weight;
-    public int blue_liquid_weight;
-    public int green_liquid_weight;
-    public int black_liquid_weight;
-    public int gasX_weight;
-    public int gasY_weight;
-    public int temperature_weight;
-    public int lighting_weight;
-
+    [SerializeField] private float[] terrain_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] red_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] blue_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] green_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] black_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] gasX_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] gasY_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] gasZ_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] temperature_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
+    [SerializeField] private float[] lighting_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
 
     // Start is called before the first frame update
     void Start()
     {
-        needs = new string[]{"Terrain", "Red Liquid", "Blue Liquid", "Green Liquid","Black Liquid","Gas X","Gas Y","Gas Z","Temperature","Lighting"};
-
-    	total_weights = 0;
+    	total_weight = 0;
     	for(int i = 0; i < weights.Length; i++){
-    		total_weights += weights[i];
+            //sum all values in weights to get total weight
+    		total_weight += weights[i];
     	}
 
     	print("total_output: " + Calculate_Output());
@@ -52,10 +40,12 @@ public class Food : MonoBehaviour
     float Calculate_Output(){
     	float total_output = 0;
     	for(int i = 0; i < needs.Length; i++){
-    		total_output += conditions[i] * weights[i]/total_weights * base_output;
+            //total output of each need is weight of the need/total weight * condition (bad = 0, med = 1, good = 2) * base output of the plant
+    		total_output += conditions[i] * weights[i]/total_weight * base_output;
     	}
     	return total_output;
     }
+
     // Update is called once per frame
     void Update()
     {
