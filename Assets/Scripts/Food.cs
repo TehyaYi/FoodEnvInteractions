@@ -13,6 +13,29 @@ public class Food : MonoBehaviour
 	//the needs are met: 0 = bad, 1 = moderate, 2 = good
 	public int[] conditions; 
 
+    //variables for the table
+    public int[] terrain_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] red_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] blue_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] green_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] black_liquid_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] gasX_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] gasY_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] gasZ_ranges = new int[6]; //[badLow, badHigh, modLow, modHigh, goodLow, goodHigh]
+    public int[] temperature_ranges = new int[3]; // val = |temp_given - middle(radius)| [furthest from radius, middle range from radius, closest to radius]
+    public int[] lighting_ranges = new int[3]; // val = |lighting_given - middle(radius)| [furthest from radius, middle range from radius, closest to radius]
+
+    public int terrain_weight;
+    public int red_liquid_weight;
+    public int blue_liquid_weight;
+    public int green_liquid_weight;
+    public int black_liquid_weight;
+    public int gasX_weight;
+    public int gasY_weight;
+    public int temperature_weight;
+    public int lighting_weight;
+
+
     // Start is called before the first frame update
     void Start()
     {
