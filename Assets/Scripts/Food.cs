@@ -24,11 +24,11 @@ public class Food : MonoBehaviour
 
     //representing the good/mod/bad ranges of need as a matrix (table).
     private float[][] ranges;
-    
+
     //variables for the table, determines what values are good or bad for the plant
     [SerializeField] private float[] terrain_ranges = new float[4]; //[0] = lower bound for good terrain, [1] = upper bound for good terrain, [2] = low bound for mod, [3] = high bound for mod, otherwise bad terrain.
     
-    /* to be removed? Moved to FoodScriptableObject
+    /* to be removed? Moved to FoodScriptableObject.cs
     [SerializeField] private float[] red_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] blue_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] green_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
@@ -49,7 +49,7 @@ public class Food : MonoBehaviour
             base_output = foodValues.getBaseOutput();
         }
         /*
-        else{ //probably to be removed, moved to FoodScriptableObject
+        else{ //probably to be removed, moved to FoodScriptableObject.cs
             ranges = new float[][]{     terrain_ranges, 
                                         red_liquid_ranges, 
                                         blue_liquid_ranges,
