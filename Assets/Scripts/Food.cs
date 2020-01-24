@@ -50,7 +50,7 @@ public class Food : MonoBehaviour
                         break;
                     case "Liquid":
                         break;
-                    case default:
+                    default:
                         print("Error: No need name matches.");
                         break;
                 }

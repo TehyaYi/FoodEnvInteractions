@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9847f0f25e10a4fde973389e5a87e980, type: 3}
   m_Name: TempSM
   m_EditorClassIdentifier: 
-  need_name: Gas X
-  weight: 0.5
+  need_name: Temperature
+  weight: 1.5
   ranges:
   - 0.4
   - 1
