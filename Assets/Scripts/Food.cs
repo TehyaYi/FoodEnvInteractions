@@ -6,6 +6,8 @@ public class Food : MonoBehaviour
 {
     private static int numOfNeeds = 10;
     
+    public FoodScriptableObject foodValues;
+
     [SerializeField] private float base_output = 0;
 
     public string[] needs = {"Terrain", "Red Liquid", "Blue Liquid", "Green Liquid","Black Liquid","Gas X","Gas Y","Gas Z","Temperature","Lighting"};
@@ -20,10 +22,13 @@ public class Food : MonoBehaviour
     //serialized just for debugging
 	[SerializeField] private int[] conditions = new int[numOfNeeds]; 
 
-    //representing the ranges as a matrix (table).
+    //representing the good/mod/bad ranges of need as a matrix (table).
     private float[][] ranges;
+    
     //variables for the table, determines what values are good or bad for the plant
     [SerializeField] private float[] terrain_ranges = new float[4]; //[0] = lower bound for good terrain, [1] = upper bound for good terrain, [2] = low bound for mod, [3] = high bound for mod, otherwise bad terrain.
+    
+    /* to be removed? Moved to FoodScriptableObject
     [SerializeField] private float[] red_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] blue_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] green_liquid_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
@@ -33,27 +38,35 @@ public class Food : MonoBehaviour
     [SerializeField] private float[] gasZ_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] temperature_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
     [SerializeField] private float[] lighting_ranges = new float[4]; //[goodLow, goodHigh, modLow, modHigh]
-    
+    */
 
     // Start is called before the first frame update
     void Start()
     {
-    	total_weight = 0;
-    	for(int i = 0; i < weights.Length; i++){
+        if(foodValues != null){
+            ranges = foodValues.getRanges();
+            weights = foodValues.getWeights();
+            base_output = foodValues.getBaseOutput();
+        }
+        /*
+        else{ //probably to be removed, moved to FoodScriptableObject
+            ranges = new float[][]{     terrain_ranges, 
+                                        red_liquid_ranges, 
+                                        blue_liquid_ranges,
+                                        black_liquid_ranges,
+                                        gasX_ranges,
+                                        gasY_ranges,
+                                        gasZ_ranges, 
+                                        temperature_ranges, 
+                                        lighting_ranges     };
+        }
+        */
+        terrain_ranges = ranges[0]; //just to check that ranges is loaded properly
+        total_weight = 0;
+        for(int i = 0; i < weights.Length; i++){
             //sum all values in weights to get total weight
-    		total_weight += weights[i];
-    	}
-
-        ranges = new float[][]{     terrain_ranges, 
-                                    red_liquid_ranges, 
-                                    blue_liquid_ranges,
-                                    black_liquid_ranges,
-                                    gasX_ranges,
-                                    gasY_ranges,
-                                    gasZ_ranges, 
-                                    temperature_ranges, 
-                                    lighting_ranges     };
-
+            total_weight += weights[i];
+        }
     	print("total_output: " + CalculateOutput());
     }
 

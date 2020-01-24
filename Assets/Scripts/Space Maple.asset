@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8991d48a3cbca43f28a038f644446aa5, type: 3}
+  m_Name: Space Maple
+  m_EditorClassIdentifier: 
+  base_output: 25
+  needs:
+  - Terrain
+  - Red Liquid
+  - Blue Liquid
+  - Green Liquid
+  - Black Liquid
+  - Gas X
+  - Gas Y
+  - Gas Z
+  - Temperature
+  - Lighting
+  weights:
+  - 3.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0
+  - 1.5
+  - 3
+  terrain_ranges:
+  - 8
+  - 12
+  - 5
+  - 8
+  red_liquid_ranges:
+  - 0
+  - 0
+  - 0
+  - 0
+  blue_liquid_ranges:
+  - 0
+  - 0
+  - 0
+  - 0
+  green_liquid_ranges:
+  - 0
+  - 0
+  - 0
+  - 0
+  black_liquid_ranges:
+  - 0
+  - 0
+  - 0
+  - 0
+  gasX_ranges:
+  - 0.41
+  - 1
+  - 0.31
+  - 0.41
+  gasY_ranges:
+  - 0.11
+  - 1
+  - 0
+  - 0
+  gasZ_ranges:
+  - 0
+  - 0
+  - 0
+  - 0
+  temperature_ranges:
+  - 41
+  - 80
+  - 31
+  - 90
+  lighting_ranges:
+  - 61
+  - 100
+  - 21
+  - 61

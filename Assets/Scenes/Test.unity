@@ -5384,6 +5384,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Space Maple
       objectReference: {fileID: 0}
+    - target: {fileID: 9091343964584910301, guid: 131a844610d1549898f86b7541e05501,
+        type: 3}
+      propertyPath: foodValues
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e4c6641b26a5457c9349021ee2101cf,
+        type: 2}
     - target: {fileID: 9091343964584910302, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_LocalPosition.x
