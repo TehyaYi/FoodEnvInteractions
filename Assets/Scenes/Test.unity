@@ -5395,6 +5395,11 @@ PrefabInstance:
       propertyPath: conditions.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9091343964584910301, guid: 131a844610d1549898f86b7541e05501,
+        type: 3}
+      propertyPath: need_values.Array.data[0]
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 9091343964584910302, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_LocalPosition.x
