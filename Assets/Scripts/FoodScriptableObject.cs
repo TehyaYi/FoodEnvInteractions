@@ -20,20 +20,6 @@ public class FoodScriptableObject : ScriptableObject
 
     private bool initialized = false;
 
-/*
-    //variables for the table, determines what values are good, moderate, or bad for the plant
-    //[0] = low bound for good, [1] = high bound for good, [2] = low bound for mod, [3] = high bound for mod, otherwise bad.
-    [SerializeField] private float[] terrain_ranges = new float[4];
-    [SerializeField] private float[] red_liquid_ranges = new float[4];
-    [SerializeField] private float[] blue_liquid_ranges = new float[4];
-    [SerializeField] private float[] green_liquid_ranges = new float[4];
-    [SerializeField] private float[] black_liquid_ranges = new float[4];
-    [SerializeField] private float[] gasX_ranges = new float[4];
-    [SerializeField] private float[] gasY_ranges = new float[4];
-    [SerializeField] private float[] gasZ_ranges = new float[4];
-    [SerializeField] private float[] temperature_ranges = new float[4];
-    [SerializeField] private float[] lighting_ranges = new float[4];
-*/
 
     public void init(){
         if(!initialized){
@@ -49,21 +35,13 @@ public class FoodScriptableObject : ScriptableObject
         }
     }
 
-    public float[][] getRanges(){
-        /*
-        ranges = new float[][]{     terrain_ranges, 
-                                    red_liquid_ranges, 
-                                    blue_liquid_ranges,
-                                    black_liquid_ranges,
-                                    gasX_ranges,
-                                    gasY_ranges,
-                                    gasZ_ranges, 
-                                    temperature_ranges, 
-                                    lighting_ranges     };
-        */
-        return ranges;
-    }
+    public float[][] getRanges(){ return ranges; }
     public float[] getWeights(){ return weights; }
     public float getBaseOutput(){ return base_output; }
     public string[] getNeeds(){ return needs; }
+    void OnApplicationQuit()
+    {
+        initialized = false;
+        Debug.Log("Application ending after " + Time.time + " seconds");
+    }
 }

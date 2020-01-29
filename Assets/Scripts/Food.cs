@@ -38,11 +38,11 @@ public class Food : MonoBehaviour
                 switch (needs[i]){
                     case "Terrain":
                         break;
-                    case "GasX":
+                    case "Gas X":
                         break;
-                    case "GasY":
+                    case "Gas Y":
                         break;
-                    case "GasZ":
+                    case "Gas Z":
                         break;
                     case "Temperature":
                         break;
