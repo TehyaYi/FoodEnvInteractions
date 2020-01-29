@@ -6,10 +6,8 @@ using UnityEngine;
 public class FoodScriptableObject : ScriptableObject
 {
     [SerializeField] private float base_output = 0;
-    
-    public string[] needs = {"Terrain", "Red Liquid", "Blue Liquid", "Green Liquid","Black Liquid","Gas X","Gas Y","Gas Z","Temperature","Lighting"};
-
-	[SerializeField] private float[] weights;
+    [SerializeField] private string[] needs;
+    [SerializeField] private float[] weights;
     private float total_weight;
 
     //Range scriptable objects to read in from
@@ -19,7 +17,6 @@ public class FoodScriptableObject : ScriptableObject
     private float[][] ranges;
 
     private bool initialized = false;
-
 
     public void init(){
         if(!initialized){
@@ -31,7 +28,7 @@ public class FoodScriptableObject : ScriptableObject
                 weights[i] = rangeSO[i].getWeight();
                 ranges[i] = rangeSO[i].getRanges();
             }
-            //initialized = true; //Need to make it false when simulation ends
+            // initialized = true; //Need to make it false when simulation ends
         }
     }
 
@@ -39,6 +36,7 @@ public class FoodScriptableObject : ScriptableObject
     public float[] getWeights(){ return weights; }
     public float getBaseOutput(){ return base_output; }
     public string[] getNeeds(){ return needs; }
+    
     void OnApplicationQuit()
     {
         initialized = false;

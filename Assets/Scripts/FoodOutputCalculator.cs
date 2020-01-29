@@ -31,7 +31,6 @@ public class FoodOutputCalculator : MonoBehaviour
     public static int[] CalculateConditions(float[][] ranges, float[] values){
     	int[] conditions = new int[ranges.Length];
 		for(int i = 0; i < ranges.Length; i++){
-            print(i);
 			float val = values[i];
 	        if(val >= ranges[i][0]&&val <= ranges[i][1]&&
 	            !(ranges[i][0] == 0&&ranges[i][1] == 0)){//upper and lower being 0 means no value satisfies
