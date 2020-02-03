@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileReader
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TileReader", order = 1)]
+public class TileReader : ScriptableObject
 {
 	[SerializeField] Sprite[] tiles;
 	public Sprite[] Tiles { get; }

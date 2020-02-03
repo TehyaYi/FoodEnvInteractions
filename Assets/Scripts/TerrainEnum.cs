@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainEnum", order = 2)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainEnum", order = 2)]
 public class TerrainEnum : ScriptableObject
 {
 	[SerializeField] Sprite[] tiles;

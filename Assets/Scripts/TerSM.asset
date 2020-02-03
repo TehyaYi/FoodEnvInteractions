@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88700c0660c1441f19036cf1f7f3fbbd, type: 3}
-  m_Name: Terrain
+  m_Name: TerSM
   m_EditorClassIdentifier: 
   need: 0
   weight: 0
   ranges:
-  - 0
-  - 0
-  - 0
-  - 0
-  tiles: []
-  values: 
+  - 8
+  - 12
+  - 5
+  - 8
+  tiles: {fileID: 11400000, guid: 1285f7a9400b64ac49c7a05205502e1f, type: 2}
+  values: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
