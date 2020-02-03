@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FoodOutputCalculator : MonoBehaviour
 {
-    // public static int[] CalculateConditions(FoodScriptableObject fso, float[] values){
-
-    // }
+    public static float CalculateOutput(FoodScriptableObject fso, float[] values){
+        return CalculateOutput(fso.getBaseOutput(), fso.getWeights(), fso.getRanges(), values);
+    }
     public static float CalculateOutput(float base_output, float[] weights, float[][] ranges, float[] values){
     	float total_weight = 0;
     	float total_output = 0;
