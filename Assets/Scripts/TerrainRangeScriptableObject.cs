@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainRangeScriptableObject", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainRangeScriptableObject", order = 2)]
 public class TerrainRangeScriptableObject : RangeScriptableObject
 {
-	[SerializeField] TerrainEnum tiles;
-    [SerializeField] int[] values;
+    [SerializeField] float[] tileValues;//the values of each tile
+
+    //tiles[] = what tile it is, should correspond to its value in tileValues[]
+    public float getValue(int[] tiles)
+    {
+        float value = 0;
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            value += tileValues[tiles[i]];
+        }
+        return value;
+    }
 }

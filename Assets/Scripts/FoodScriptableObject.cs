@@ -36,10 +36,5 @@ public class FoodScriptableObject : ScriptableObject
     public float[] getWeights(){ return weights; }
     public float getBaseOutput(){ return base_output; }
     public string[] getNeeds(){ return needs; }
-    
-    void OnApplicationQuit()
-    {
-        initialized = false;
-        Debug.Log("Application ending after " + Time.time + " seconds");
-    }
+    public RangeScriptableObject[] getRSO() { return rangeSO; }
 }

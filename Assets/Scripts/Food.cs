@@ -27,9 +27,8 @@ public class Food : MonoBehaviour
     //Detects what is in the environment and populate need_values[]
     void DetectEnvironment(){
         string[] needs = foodValues.getNeeds();
-        float[][] ranges = foodValues.getRanges();
         float[] weights = foodValues.getWeights();
-        float base_output = foodValues.getBaseOutput();
+        RangeScriptableObject[] rso = foodValues.getRSO();
         need_values = new float[needs.Length];
         //TO-DO
         for(int i = 0; i < weights.Length; i++){
@@ -37,21 +36,39 @@ public class Food : MonoBehaviour
                 //Determine need values
                 switch (needs[i]){
                     case "Terrain":
+                        //get tiles around the food source and return as an array of integers
+                        //each type of plant should have an id, e.g. 0 = rock, 1 = sand, 2 = grass, etc.
+
+                        //this is just to demonstrate that it is working
+                        int[] tiles = new int[] { 0, 0, 3, 3, 2, 1, 2, 2 }; //2 rocks, 1 sand, 3 dirt, 2 grass
+                        float avgValue = ((TerrainRangeScriptableObject)rso[i]).getValue(tiles)/tiles.Length;
+                        need_values[i] = avgValue;
                         break;
                     case "Gas X":
+                        //Read value from some class that handles atmosphere
+                        need_values[i] = 0;
                         break;
                     case "Gas Y":
+                        //Read value from some class that handles atmosphere
+                        need_values[i] = 0;
                         break;
                     case "Gas Z":
+                        //Read value from some class that handles atmosphere
+                        need_values[i] = 0;
                         break;
                     case "Temperature":
-                        break;
-                    case "Lighting":
+                        //Read value from some class that handles temperature
+                        need_values[i] = 0;
                         break;
                     case "Liquid":
+                        //TO-DO
+                        //get liquid tiles around the food source and return as an array of tiles
+                        //find some way to calculate the value if there are two bodies of water
+                        
+                        need_values[i] = 0;
                         break;
                     default:
-                        print("Error: No need name matches.");
+                        Debug.LogError("Error: No need name matches.");
                         break;
                 }
                 

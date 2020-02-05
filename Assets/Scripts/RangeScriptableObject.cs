@@ -6,10 +6,10 @@ using UnityEngine;
 public class RangeScriptableObject : ScriptableObject
 {
 	//passing string to make it more readable in code
-	private string[] need_names = {"Terrain", "Red Liquid", "Blue Liquid", "Green Liquid","Black Liquid","Gas X","Gas Y","Gas Z","Temperature","Lighting"};
+	private string[] need_names = {"Terrain", "Liquid", "Gas X","Gas Y","Gas Z","Temperature"};
 
 	//using enum to create a dropdown list
-	private enum Needs{ Terrain,RedLiquid,BlueLiquid,GreenLiquid,BlackLiquid,GasX,GasY,GasZ,Temperature,Lighting};
+	private enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
 	[SerializeField] private Needs need;
 
     [SerializeField] private float weight;
