@@ -19,7 +19,9 @@ public class FoodScriptableObject : ScriptableObject
     private bool initialized = false;
 
     public void init(){
-        if(!initialized){
+        if(!initialized)
+        {
+            total_weight = 0;
             needs = new string[rangeSO.Length];
             weights = new float[rangeSO.Length];
             ranges = new float[rangeSO.Length][];
@@ -27,6 +29,7 @@ public class FoodScriptableObject : ScriptableObject
                 needs[i] = rangeSO[i].getName();
                 weights[i] = rangeSO[i].getWeight();
                 ranges[i] = rangeSO[i].getRanges();
+                total_weight += weights[i];
             }
             // initialized = true; //Need to make it false when simulation ends
         }
@@ -36,5 +39,6 @@ public class FoodScriptableObject : ScriptableObject
     public float[] getWeights(){ return weights; }
     public float getBaseOutput(){ return base_output; }
     public string[] getNeeds(){ return needs; }
+    public float getTWeight() { return total_weight; }
     public RangeScriptableObject[] getRSO() { return rangeSO; }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainRangeScriptableObject", order = 2)]
 public class TerrainRangeScriptableObject : RangeScriptableObject
 {
+    //may add a enum or Dictionary<enum, int> in order to go
+    //from enum to tileValues
     [SerializeField] float[] tileValues;//the values of each tile
 
     //tiles[] = what tile it is, should correspond to its value in tileValues[]

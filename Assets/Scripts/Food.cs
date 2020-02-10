@@ -3,33 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : MonoBehaviour
-{   
+{
+    //using enum to create a dropdown list
+    private enum FoodTypes { SpaceMaple, Food2, Food3, Food4, Food5 };
+    [SerializeField] private FoodTypes type;
+
+    //ScriptableObject to read from
     public FoodScriptableObject foodValues;
-    
+
+    // For debugging, might be removed later
     //How much of each need is provided, raw value of needs
     [SerializeField] private float[] raw_values;
-	
-    //representing the good/mod/bad ranges of need satisfaction as a matrix (table).
-    private float[][] ranges;
+
+    //How well each need is provided
+    [SerializeField] private int[] conditions;
 
     // Start is called before the first frame update
     void Start()
     {
+        int numNeeds = foodValues.getRSO().Length;
+        raw_values = new float[numNeeds];
+        conditions = new int[numNeeds];
+
         if(foodValues != null){
             foodValues.init();
         }else{
             print("Error: foodValues is null");
         }
+
         DetectEnvironment();
-    	print("total_output: " + FoodOutputCalculator.CalculateOutput(foodValues.getBaseOutput(), foodValues.getWeights(), foodValues.getRanges(), raw_values));
+    	print("total_output: " + FoodOutputCalculator.CalculateOutput(foodValues, conditions));
     }
 
     //Detects what is in the environment and populate raw_values[]
-    void DetectEnvironment(){
-        string[] needs = foodValues.getNeeds();
-        float[] weights = foodValues.getWeights();
+    void DetectEnvironment()
+    {
         RangeScriptableObject[] rso = foodValues.getRSO();
-        raw_values = new float[needs.Length];
+        float[] weights = foodValues.getWeights();
+        string[] needs = foodValues.getNeeds();
         //TO-DO
         for(int i = 0; i < weights.Length; i++){
             if(weights[i] > 0){ //Lazy evaluation, only detect if it matters
@@ -72,7 +83,7 @@ public class Food : MonoBehaviour
                         Debug.LogError("Error: No need name matches.");
                         break;
                 }
-                
+                conditions[i] = rso[i].calculateCondition(raw_values[i]);
             }
         }
     }

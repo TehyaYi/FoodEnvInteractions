@@ -9,7 +9,7 @@ public class RangeScriptableObject : ScriptableObject
 	private string[] need_names = {"Terrain", "Liquid", "Gas X","Gas Y","Gas Z","Temperature"};
 
 	//using enum to create a dropdown list
-	private enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
+	public enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
 	[SerializeField] private Needs need;
 
     [SerializeField] private float weight;
@@ -17,6 +17,33 @@ public class RangeScriptableObject : ScriptableObject
     
 	//passing string to make it more readable in code
     public string getName(){ return need_names[(int)need]; }
+
     public float getWeight(){ return weight; }
+
     public float[] getRanges(){ return ranges; }
+
+    public Needs getNeed() { return need; }
+
+
+	//Calculate how good the need are met and return as int condition
+	//0 = bad, 1 = moderate, 2 = good
+	//values = current value of the need
+	public int calculateCondition(float val) {
+		int condition;
+		if (val >= ranges[0] && val <= ranges[1] &&
+			   !(ranges[0] == 0 && ranges[1] == 0))
+		{//upper and lower being 0 means no value satisfies
+			condition = 2;
+		}
+		else if (val >= ranges[2] && val <= ranges[3] &&
+		   !(ranges[2] == 0 && ranges[3] == 0))
+		{//upper and lower being 0 means no value satisfies
+			condition = 1;
+		}
+		else
+		{
+			condition = 0;
+		}
+		return condition;
+	}
 }
