@@ -7,6 +7,7 @@ public class FoodOutputCalculator : MonoBehaviour
     public static float CalculateOutput(FoodScriptableObject fso, float[] values){
         return CalculateOutput(fso.getBaseOutput(), fso.getWeights(), fso.getRanges(), values);
     }
+    //values = raw values
     public static float CalculateOutput(float base_output, float[] weights, float[][] ranges, float[] values){
     	float total_weight = 0;
     	float total_output = 0;

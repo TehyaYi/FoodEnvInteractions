@@ -9,13 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9847f0f25e10a4fde973389e5a87e980, type: 3}
+  m_Script: {fileID: 11500000, guid: 88700c0660c1441f19036cf1f7f3fbbd, type: 3}
   m_Name: TerSM
   m_EditorClassIdentifier: 
   need: 0
   weight: 3.5
   ranges:
-  - 8
-  - 12
-  - 5
-  - 8
+  - 1
+  - 2
+  - 0
+  - 1
+  tileValues:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4

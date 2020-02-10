@@ -18,16 +18,16 @@ MonoBehaviour:
   - Temperature
   - Gas X
   - Gas Y
-  - Lighting
+  - Terrain
   weights:
   - 3.5
   - 1.5
   - 0.5
   - 0.5
-  - 3
+  - 0
   rangeSO:
-  - {fileID: 11400000, guid: ee692838ce8ee4d1fa46c54062a0a49d, type: 2}
+  - {fileID: 11400000, guid: 130257bfde2cf434788ae4fc45047e01, type: 2}
   - {fileID: 11400000, guid: abe00f5afe239475186dabbb6f0c4cd6, type: 2}
   - {fileID: 11400000, guid: 101aeaa44b53b46a98592357ac49756b, type: 2}
   - {fileID: 11400000, guid: 1fffe4c9ffbbf4b3aa9c9f28b1483b25, type: 2}
-  - {fileID: 11400000, guid: 35b0844fdfa734195ab56f2bb45a6b58, type: 2}
+  - {fileID: 11400000, guid: 75541e3d4567c4724b1290de6cf34ee5, type: 2}
