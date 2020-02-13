@@ -18,7 +18,12 @@ public class FoodSource : MonoBehaviour
     //How well each need is provided
     [SerializeField] private int[] conditions;
 
-    float totalOutput;
+    [SerializeField] private float totalOutput;
+
+    public float getOutput()
+    {
+        return totalOutput;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +42,6 @@ public class FoodSource : MonoBehaviour
         }
 
         DetectEnvironment();
-        totalOutput = FoodOutputCalculator.CalculateOutput(foodValues, conditions);
         print("total_output: " + totalOutput);
     }
 
@@ -96,5 +100,8 @@ public class FoodSource : MonoBehaviour
                 conditions[i] = rso[i].calculateCondition(rawValues[i]);
             }
         }
+
+        //calculate output based on conditions
+        totalOutput = FoodOutputCalculator.CalculateOutput(foodValues, conditions);
     }
 }
