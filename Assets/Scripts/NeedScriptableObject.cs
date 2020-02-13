@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RangeScriptableObject", order = 1)]
-public class RangeScriptableObject : ScriptableObject
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/NeedScriptableObject", order = 1)]
+public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptableObject>
 {
 	//passing string to make it more readable in code
 	private string[] need_names = {"Terrain", "Liquid", "Gas X","Gas Y","Gas Z","Temperature"};
-
+    
 	//using enum to create a dropdown list
 	public enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
-	[SerializeField] private Needs need;
+	[SerializeField] private Needs need = Needs.GasX;
 
-    [SerializeField] private float weight;
+    [SerializeField] private float weight = 0;
     [SerializeField] private float[] ranges = new float[4];
     
 	//passing string to make it more readable in code
@@ -46,4 +47,29 @@ public class RangeScriptableObject : ScriptableObject
 		}
 		return condition;
 	}
+
+	public int CompareTo(NeedScriptableObject other) {
+		if (need < other.need)
+		{
+			return -1;
+		}
+		else if (need > other.need)
+		{
+			return 1;
+		}
+		else { //need == other.need
+			if (weight < other.weight)
+			{
+				return -1;
+			}
+			else if (weight > other.weight)
+			{
+				return 1;
+			}
+			else //need and weight are both equal
+			{
+				return 0;
+			}
+        }
+    }
 }

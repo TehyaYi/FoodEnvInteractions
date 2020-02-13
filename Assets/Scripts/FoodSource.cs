@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class FoodSource : MonoBehaviour
 {
     //using enum to create a dropdown list
     private enum FoodTypes { SpaceMaple, Food2, Food3, Food4, Food5 };
@@ -13,63 +13,73 @@ public class Food : MonoBehaviour
 
     // For debugging, might be removed later
     //How much of each need is provided, raw value of needs
-    [SerializeField] private float[] raw_values;
+    [SerializeField] private float[] rawValues;
 
     //How well each need is provided
     [SerializeField] private int[] conditions;
 
+    float totalOutput;
+
     // Start is called before the first frame update
     void Start()
     {
-        int numNeeds = foodValues.getRSO().Length;
-        raw_values = new float[numNeeds];
+        int numNeeds = foodValues.getNSO().Length;
+        rawValues = new float[numNeeds];
         conditions = new int[numNeeds];
+        totalOutput = 0;
 
-        if(foodValues != null){
-            foodValues.init();
-        }else{
+        if (foodValues != null)
+        {
+        }
+        else
+        {
             print("Error: foodValues is null");
         }
 
         DetectEnvironment();
-    	print("total_output: " + FoodOutputCalculator.CalculateOutput(foodValues, conditions));
+        totalOutput = FoodOutputCalculator.CalculateOutput(foodValues, conditions);
+        print("total_output: " + totalOutput);
     }
 
-    //Detects what is in the environment and populate raw_values[]
+    //Detects what is in the environment and populate rawValues[]
     void DetectEnvironment()
     {
-        RangeScriptableObject[] rso = foodValues.getRSO();
+        NeedScriptableObject[] rso = foodValues.getNSO();
         float[] weights = foodValues.getWeights();
         string[] needs = foodValues.getNeeds();
         //TO-DO
-        for(int i = 0; i < weights.Length; i++){
-            if(weights[i] > 0){ //Lazy evaluation, only detect if it matters
+        for (int i = 0; i < weights.Length; i++)
+        {
+            if (weights[i] > 0)
+            { //Lazy evaluation, only detect if it matters
                 //Determine need values
-                switch (needs[i]){
+                switch (needs[i])
+                {
                     case "Terrain":
                         //get tiles around the food source and return as an array of integers
                         //each type of plant should have an id, e.g. 0 = rock, 1 = sand, 2 = dirt, 3 = grass etc.
 
                         //this is just to demonstrate that it is working
-                        int[] tiles = new int[] { 0, 0, 3, 3, 2, 1, 2, 2 }; //2 rocks, 1 sand, 3 dirt, 2 grass
-                        float avgValue = ((TerrainRangeScriptableObject)rso[i]).getValue(tiles)/tiles.Length;
-                        raw_values[i] = avgValue;
+                        Tiles[] tiles = new Tiles[] { Tiles.Rock, Tiles.Rock, Tiles.Grass, Tiles.Grass,
+                            Tiles.Dirt, Tiles.Sand, Tiles.Dirt, Tiles.Dirt }; //2 rocks, 1 sand, 3 dirt, 2 grass
+                        float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles) / tiles.Length;
+                        rawValues[i] = avgValue;
                         break;
                     case "Gas X":
                         //Read value from some class that handles atmosphere
-                        raw_values[i] = 0;
+                        rawValues[i] = 0;
                         break;
                     case "Gas Y":
                         //Read value from some class that handles atmosphere
-                        raw_values[i] = 0;
+                        rawValues[i] = 0;
                         break;
                     case "Gas Z":
                         //Read value from some class that handles atmosphere
-                        raw_values[i] = 0;
+                        rawValues[i] = 0;
                         break;
                     case "Temperature":
                         //Read value from some class that handles temperature
-                        raw_values[i] = 0;
+                        rawValues[i] = 0;
                         break;
                     case "Liquid":
                         //TO-DO
@@ -77,13 +87,13 @@ public class Food : MonoBehaviour
                         //find some way to calculate the value if there are two bodies of water
                         float[,] liquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
 
-                        raw_values[i] = ((LiquidRangeScriptableObject)rso[i]).getValue(liquid);
+                        rawValues[i] = ((LiquidNeedScriptableObject)rso[i]).getValue(liquid);
                         break;
                     default:
                         Debug.LogError("Error: No need name matches.");
                         break;
                 }
-                conditions[i] = rso[i].calculateCondition(raw_values[i]);
+                conditions[i] = rso[i].calculateCondition(rawValues[i]);
             }
         }
     }

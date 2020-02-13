@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LiquidRangeScriptableObject", order = 2)]
-public class LiquidRangeScriptableObject : RangeScriptableObject
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LiquidNeedScriptableObject", order = 2)]
+public class LiquidNeedScriptableObject : NeedScriptableObject
 {
     //Only a water tile with an absolute distance of less than the tolerance
     //to targetRGB will be counted towards water need
     [SerializeField] float[] targetRGB = new float[3];
-    [SerializeField] float tolerance;
+    [SerializeField] float tolerance = 0;
 
 
     /*

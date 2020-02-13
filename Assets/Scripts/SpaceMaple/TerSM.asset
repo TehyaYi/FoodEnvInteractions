@@ -19,9 +19,12 @@ MonoBehaviour:
   - 2
   - 0
   - 1
-  tileValues:
-  - 0
-  - 1
-  - 2
-  - 3
-  - 4
+  tileVal:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 1
+  - type: 2
+    value: 2
+  - type: 3
+    value: 3
