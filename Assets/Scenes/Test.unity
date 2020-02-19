@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 366436303}
   - component: {fileID: 366436305}
   - component: {fileID: 366436304}
+  - component: {fileID: 366436306}
   m_Layer: 0
   m_Name: Liquid
   m_TagString: Untagged
@@ -4425,6 +4426,38 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &366436306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366436302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf322ea214924588949f4dcf7cc94b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &479130227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 357624510369086739, guid: 131a844610d1549898f86b7541e05501,
+    type: 3}
+  m_PrefabInstance: {fileID: 357624509832366281}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &479130228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479130227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73dee3f8d4d44f22b11793983883b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toTest: {fileID: 793378766}
+  rad: 4
 --- !u!1 &671067566
 GameObject:
   m_ObjectHideFlags: 0
@@ -4605,6 +4638,7 @@ GameObject:
   - component: {fileID: 793378763}
   - component: {fileID: 793378765}
   - component: {fileID: 793378764}
+  - component: {fileID: 793378766}
   m_Layer: 0
   m_Name: Structures
   m_TagString: Untagged
@@ -4664,7 +4698,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -5443,6 +5477,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &793378766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793378762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf322ea214924588949f4dcf7cc94b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5543,7 +5589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1654885438
 Transform:
   m_ObjectHideFlags: 0
@@ -5596,7 +5642,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
