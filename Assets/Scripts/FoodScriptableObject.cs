@@ -21,6 +21,7 @@ public class FoodScriptableObject : ScriptableObject
     private void OnValidate(){
         //sorting to make the interface cleaner
         List<NeedScriptableObject> temp = new List<NeedScriptableObject>(needSO);
+        temp.RemoveAll(item => item == null);
         temp.Sort();
         needSO = temp.ToArray();
 

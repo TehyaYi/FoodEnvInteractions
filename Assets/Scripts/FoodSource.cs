@@ -20,6 +20,8 @@ public class FoodSource : MonoBehaviour
 
     [SerializeField] private float totalOutput;
 
+    public GameManager gameManager;
+
     public float getOutput()
     {
         return totalOutput;
@@ -45,6 +47,56 @@ public class FoodSource : MonoBehaviour
         print("total_output: " + totalOutput);
     }
 
+    public void UpdateEnv(string need)
+    {
+        NeedScriptableObject[] rso = foodValues.getNSO();
+        for (int i = 0; i < rso.Length; i++) {
+            if (rso[i].getName() == need)
+            {
+                switch (need)
+                {
+                    case "Terrain":
+                        //get tiles around the food source and return as an array of integers
+                        //each type of plant should have an id, e.g. 0 = rock, 1 = sand, 2 = dirt, 3 = grass etc.
+
+                        //this is just to demonstrate that it is working
+                        Tiles[] tiles = new Tiles[] { Tiles.Rock, Tiles.Rock, Tiles.Grass, Tiles.Grass,
+                                    Tiles.Dirt, Tiles.Sand, Tiles.Dirt, Tiles.Dirt }; //2 rocks, 1 sand, 3 dirt, 2 grass
+                        float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles) / tiles.Length;
+                        rawValues[i] = avgValue;
+                        break;
+                    case "Gas X":
+                        //Read value from some class that handles atmosphere
+                        rawValues[i] = gameManager.getGX();
+                        break;
+                    case "Gas Y":
+                        //Read value from some class that handles atmosphere
+                        rawValues[i] = gameManager.getGY();
+                        break;
+                    case "Gas Z":
+                        //Read value from some class that handles atmosphere
+                        rawValues[i] = gameManager.getGZ();
+                        break;
+                    case "Temperature":
+                        //Read value from some class that handles temperature
+                        rawValues[i] = gameManager.getTemp();
+                        break;
+                    case "Liquid":
+                        //TO-DO
+                        //get liquid tiles around the food source and return as an array of tiles
+                        //find some way to calculate the value if there are two bodies of water
+                        float[,] liquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
+
+                        rawValues[i] = ((LiquidNeedScriptableObject)rso[i]).getValue(liquid);
+                        break;
+                    default:
+                        Debug.LogError("Error: No need name matches.");
+                        break;
+                }
+                conditions[i] = rso[i].calculateCondition(rawValues[i]);
+            }
+        }
+    }
     //Detects what is in the environment and populate rawValues[]
     void DetectEnvironment()
     {
@@ -71,19 +123,19 @@ public class FoodSource : MonoBehaviour
                         break;
                     case "Gas X":
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = 0;
+                        rawValues[i] = gameManager.getGX();
                         break;
                     case "Gas Y":
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = 0;
+                        rawValues[i] = gameManager.getGY();
                         break;
                     case "Gas Z":
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = 0;
+                        rawValues[i] = gameManager.getGZ();
                         break;
                     case "Temperature":
                         //Read value from some class that handles temperature
-                        rawValues[i] = 0;
+                        rawValues[i] = gameManager.getTemp();
                         break;
                     case "Liquid":
                         //TO-DO

@@ -15,7 +15,7 @@ MonoBehaviour:
   need: 5
   weight: 1.5
   ranges:
-  - 0.4
-  - 1
-  - 0.3
-  - 0.4
+  - 40
+  - 100
+  - 30
+  - 40

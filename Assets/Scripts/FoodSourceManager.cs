@@ -19,7 +19,7 @@ public class FoodSourceManager : MonoBehaviour
         // TODO : tell food dist and food env to update
         return currIndex;
     }
-
+    
     public void delete(int currIndex)
     {
         foodSourceDict.Remove(currIndex);

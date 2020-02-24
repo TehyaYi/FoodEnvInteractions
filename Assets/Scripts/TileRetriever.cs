@@ -12,6 +12,8 @@ public class TileRetriever : MonoBehaviour
         from = GetComponent<Tilemap>();
     }
 
+    public Tilemap GetTilemap() { return from; }
+
     //Get tiles at world_pos with a radius of radius
     public List<TileBase> GetTiles(Vector3 world_pos, int radius) {
         //list of tiles to return
@@ -19,7 +21,6 @@ public class TileRetriever : MonoBehaviour
 
         //position of object in terms of tilemap
         Vector3Int cell_pos = from.WorldToCell(world_pos);
-        print("CellPos = " + cell_pos);
 
         //prototype nested loop -- could be a little more efficient
         for (int r = cell_pos.y - radius; r <= cell_pos.y + radius; r++) {
