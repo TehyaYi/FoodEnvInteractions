@@ -7,7 +7,12 @@ public class LiquidNeedScriptableObject : NeedScriptableObject
 {
     //Only a water tile with an absolute distance of less than the tolerance
     //to targetRGB will be counted towards water need
+
+    [Tooltip("[R, G, B], the ideal liquid for the food source")]
     [SerializeField] float[] targetRGB = new float[3];
+
+
+    [Tooltip("A liquid tile with RGB color at most tolerance units away from targetRGB will be counted towards the need.")]
     [SerializeField] float tolerance = 0;
 
 

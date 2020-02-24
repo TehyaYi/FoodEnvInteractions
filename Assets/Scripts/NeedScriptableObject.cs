@@ -13,7 +13,10 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
 	public enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
 	[SerializeField] private Needs need = Needs.GasX;
 
-    [SerializeField] private float weight = 0;
+	[Tooltip("Weight when determining output")]
+	[SerializeField] private float weight = 0;
+
+    [Tooltip("[Good Low, Good High, Mod Low, Mod High]")]
     [SerializeField] private float[] ranges = new float[4];
     
 	//passing string to make it more readable in code
