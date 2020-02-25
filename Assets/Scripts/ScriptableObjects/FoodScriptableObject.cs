@@ -19,8 +19,6 @@ public class FoodScriptableObject : ScriptableObject
     [SerializeField] private float[] weights;
     private float total_weight;
 
-    //representing the ranges as a matrix (table).
-    private float[][] ranges;
 
     //Gets called when value of scriptable object changes in the inspector
     private void OnValidate(){
@@ -33,12 +31,10 @@ public class FoodScriptableObject : ScriptableObject
         total_weight = 0;
         needs = new string[needSO.Length];
         weights = new float[needSO.Length];
-        ranges = new float[needSO.Length][];
 
         for(int i = 0; i < needSO.Length; i++){
             needs[i] = needSO[i].getName();
             weights[i] = needSO[i].getWeight();
-            ranges[i] = needSO[i].getRanges();
 
             //negative weight will serve as harmful environment
             if (weights[i] > 0)
@@ -48,7 +44,6 @@ public class FoodScriptableObject : ScriptableObject
         }
     }
 
-    public float[][] getRanges(){ return ranges; }
     public float[] getWeights(){ return weights; }
     public float getBaseOutput(){ return base_output; }
     public string[] getNeeds(){ return needs; }

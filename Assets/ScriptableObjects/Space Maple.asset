@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Space Maple
   m_EditorClassIdentifier: 
   base_output: 25
+  needSO:
+  - {fileID: 11400000, guid: 130257bfde2cf434788ae4fc45047e01, type: 2}
+  - {fileID: 11400000, guid: 75541e3d4567c4724b1290de6cf34ee5, type: 2}
+  - {fileID: 11400000, guid: 101aeaa44b53b46a98592357ac49756b, type: 2}
+  - {fileID: 11400000, guid: 1fffe4c9ffbbf4b3aa9c9f28b1483b25, type: 2}
+  - {fileID: 11400000, guid: abe00f5afe239475186dabbb6f0c4cd6, type: 2}
   needs:
   - Terrain
   - Liquid
@@ -25,9 +31,3 @@ MonoBehaviour:
   - 0.5
   - 0.5
   - 1.5
-  needSO:
-  - {fileID: 11400000, guid: 130257bfde2cf434788ae4fc45047e01, type: 2}
-  - {fileID: 11400000, guid: 75541e3d4567c4724b1290de6cf34ee5, type: 2}
-  - {fileID: 11400000, guid: 101aeaa44b53b46a98592357ac49756b, type: 2}
-  - {fileID: 11400000, guid: 1fffe4c9ffbbf4b3aa9c9f28b1483b25, type: 2}
-  - {fileID: 11400000, guid: abe00f5afe239475186dabbb6f0c4cd6, type: 2}

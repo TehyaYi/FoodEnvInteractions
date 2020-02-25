@@ -5,17 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class TileRetriever : MonoBehaviour
 {
-    Tilemap from;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        from = GetComponent<Tilemap>();
-    }
+    public Tilemap terrain;
+    public Tilemap liquid;
 
-    public Tilemap GetTilemap() { return from; }
+    public Tilemap GetTerrain() { return terrain; }
+    public Tilemap GetLiquid() { return liquid; }
 
     //Get tiles at world_pos with a radius of radius
-    public List<TileBase> GetTiles(Vector3 world_pos, int radius) {
+    public List<TileBase> GetTiles(Vector3 world_pos, int radius, Tilemap from) {
         //list of tiles to return
         List<TileBase> tiles = new List<TileBase>();
 
@@ -46,4 +43,7 @@ public class TileRetriever : MonoBehaviour
         }
         return tiles;
     }
+    public List<TileBase> GetTerrainTiles(Vector3 world_pos, int radius) { return GetTiles(world_pos, radius, terrain); }
+    public List<TileBase> GetLiquidTiles(Vector3 world_pos, int radius) { return GetTiles(world_pos, radius, liquid); }
+
 }
