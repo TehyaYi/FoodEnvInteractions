@@ -27,4 +27,12 @@ public class Population : MonoBehaviour
     {
         return area.GetMap();
     }
+
+    //for visual meme lol
+    private void Update()
+    {
+        if (ReservePartitionManager.Consumes(this, food, map)) {
+            transform.Translate((food.transform.position - transform.position) * 0.01f);
+        }
+    }
 }
