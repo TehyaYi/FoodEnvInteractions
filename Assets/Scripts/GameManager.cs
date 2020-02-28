@@ -20,5 +20,6 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         atm = new Atmosphere(gasX, gasY, gasZ, temp);
+        
     }
 }
