@@ -51,6 +51,7 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
 		return condition;
 	}
 
+    //to be sorted in FSO
 	public int CompareTo(NeedScriptableObject other) {
 		if (need < other.need)
 		{

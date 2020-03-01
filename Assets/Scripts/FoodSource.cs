@@ -37,12 +37,8 @@ public class FoodSource : MonoBehaviour
         conditions = new int[numNeeds];
         totalOutput = 0;
 
-        if (foodValues != null)
-        {
-        }
-        else
-        {
-            print("Error: foodValues is null");
+        if (foodValues == null) {
+            print("Error: foodValues is not set");
         }
 
         DetectEnvironment();
@@ -56,7 +52,8 @@ public class FoodSource : MonoBehaviour
         NeedScriptableObject[] rso = foodValues.getNSO();
         float[] weights = foodValues.getWeights();
         string[] needs = foodValues.getNeeds();
-        //TO-DO
+
+        //TODO Implement liquid
         for (int i = 0; i < weights.Length; i++)
         {
             if (weights[i] > 0)
@@ -72,7 +69,11 @@ public class FoodSource : MonoBehaviour
                         //Tiles[] tiles = new Tiles[] { Tiles.Rock, Tiles.Rock, Tiles.Grass, Tiles.Grass,
                         //    Tiles.Dirt, Tiles.Sand, Tiles.Dirt, Tiles.Dirt }; //2 rocks, 1 sand, 3 dirt, 2 grass
 
-                        TileBase[] tiless = tileRetriever.GetTerrainTiles(transform.position, 3).ToArray();
+                        TileBase[] tiless = tileRetriever.GetTerrainTiles(transform.position, foodValues.getRadius()).ToArray();
+
+                        //quick check for no tiles read
+                        if (tiless.Length == 0) { rawValues[i] = 0; break; }
+
                         Tiles[] tiles = new Tiles[tiless.Length];
 
                         Dictionary<string, Tiles> nameSwap = new Dictionary<string, Tiles>();
@@ -83,6 +84,8 @@ public class FoodSource : MonoBehaviour
                             tiles[ind] = nameSwap[tiless[ind].name];
                         }
 
+                        //maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
+                        //because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
                         float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles) / tiles.Length;
                         rawValues[i] = avgValue;
                         break;
@@ -120,58 +123,5 @@ public class FoodSource : MonoBehaviour
 
         //calculate output based on conditions
         totalOutput = FoodOutputCalculator.CalculateOutput(foodValues, conditions);
-    }
-
-    //temporary function to update a certain need - to be improved
-    public void UpdateEnv(string need)
-    {
-        NeedScriptableObject[] rso = foodValues.getNSO();
-        for (int i = 0; i < rso.Length; i++)
-        {
-            if (rso[i].getName() == need)
-            {
-                switch (need)
-                {
-                    case "Terrain":
-                        //get tiles around the food source and return as an array of integers
-                        //each type of plant should have an id, e.g. 0 = rock, 1 = sand, 2 = dirt, 3 = grass etc.
-
-                        //this is just to demonstrate that it is working
-                        Tiles[] tiles = new Tiles[] { Tiles.Rock, Tiles.Rock, Tiles.Grass, Tiles.Grass,
-                                    Tiles.Dirt, Tiles.Sand, Tiles.Dirt, Tiles.Dirt }; //2 rocks, 1 sand, 3 dirt, 2 grass
-                        float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles) / tiles.Length;
-                        rawValues[i] = avgValue;
-                        break;
-                    case "Gas X":
-                        //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGX();
-                        break;
-                    case "Gas Y":
-                        //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGY();
-                        break;
-                    case "Gas Z":
-                        //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGZ();
-                        break;
-                    case "Temperature":
-                        //Read value from some class that handles temperature
-                        rawValues[i] = gameManager.getTemp();
-                        break;
-                    case "Liquid":
-                        //TO-DO
-                        //get liquid tiles around the food source and return as an array of tiles
-                        //find some way to calculate the value if there are two bodies of water
-                        float[,] liquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
-
-                        rawValues[i] = ((LiquidNeedScriptableObject)rso[i]).getValue(liquid);
-                        break;
-                    default:
-                        Debug.LogError("Error: No need name matches.");
-                        break;
-                }
-                conditions[i] = rso[i].calculateCondition(rawValues[i]);
-            }
-        }
     }
 }

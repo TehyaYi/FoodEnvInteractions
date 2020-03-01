@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// [Deprecated] A class that represents the closed area that a population lives on
+/// </summary>
 public class EnclosedArea : Area
 {
     Atmosphere internalAtmosphere;

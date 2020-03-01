@@ -15,7 +15,7 @@ public class ReservePartitionManager : MonoBehaviour
     Stack<int> openID;
     Dictionary <Vector3Int, long> accessMap;
     public Tilemap terrain;
-    public Tilemap liquid;
+    public Tilemap liquid; //currently not used
 
     public void Awake() {
         if (ins != null && this != ins)
@@ -36,7 +36,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     ///<summary>
-    ///Add a population to the RPM
+    ///Add a population to the RPM.
     ///</summary>
     public void AddPopulation(Population pop) {
         if (!pops.Contains(pop)){
@@ -69,19 +69,19 @@ public class ReservePartitionManager : MonoBehaviour
         if (!pops.Contains(pop)) {
             AssignID(pop);
         }
-        Stack<Vector3Int> queue = new Stack<Vector3Int>();
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
         List<Vector3Int> accessible = new List<Vector3Int>();
         List<Vector3Int> unaccessible = new List<Vector3Int>();
         Vector3Int cur;
 
         //starting location
         Vector3Int location = terrain.WorldToCell(pop.transform.position);
-        queue.Push(location);
+        stack.Push(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
-        while (queue.Count > 0) {
+        while (stack.Count > 0) {
             //next point
-            cur = queue.Pop();
+            cur = stack.Pop();
 
             if (accessible.Contains(cur) || unaccessible.Contains(cur)){
                 //checked before, move on
@@ -96,10 +96,10 @@ public class ReservePartitionManager : MonoBehaviour
                 accessible.Add(cur);
 
                 //check all 4 tiles around, may be too expensive/awaiting optimization
-                queue.Push(cur + Vector3Int.left);
-                queue.Push(cur + Vector3Int.up);
-                queue.Push(cur + Vector3Int.right);
-                queue.Push(cur + Vector3Int.down);
+                stack.Push(cur + Vector3Int.left);
+                stack.Push(cur + Vector3Int.up);
+                stack.Push(cur + Vector3Int.right);
+                stack.Push(cur + Vector3Int.down);
             }
             else {
                 //save the Vector3Int since it is already checked
@@ -129,7 +129,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     ///<summary>
-    ///Check if a population can access toPos.
+    ///Check if a population can access toWorldPos.
     ///</summary>
     public bool CanAccess(Population pop, Vector3 toWorldPos)
     {
@@ -146,19 +146,20 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
 
+        //pop can't access the position
         return false;
     }
 
     ///<summary>
-    ///Go through pops and return a list of populations that has access to the tile corresponding to toPos.
+    ///Go through pops and return a list of populations that has access to the tile corresponding to toWorldPos.
     ///</summary>
-    public List<Population> GetPopulationsWithAccessTo(Vector3 toPos)
+    public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         List<Population> accessible = new List<Population>();
         foreach (Population pop in pops)
         {
             //utilize CanAccess()
-            if (CanAccess(pop, toPos))
+            if (CanAccess(pop, toWorldPos))
             {
                 accessible.Add(pop);
             }
@@ -179,8 +180,8 @@ public class ReservePartitionManager : MonoBehaviour
                 return true;
             }
         }
-        //pop can't consume the food
 
+        //pop can't consume the food
         return false;
     }
 

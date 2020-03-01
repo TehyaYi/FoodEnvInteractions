@@ -53,5 +53,4 @@ public class TerrainNeedScriptableObject : NeedScriptableObject
         }
         return value;
     }
-    
 }

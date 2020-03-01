@@ -8,7 +8,6 @@ public class Tester : MonoBehaviour
 {
     public FoodSource info;
     public TileRetriever toTest;
-    public int radius;
     public Dictionary<string, int> counts;
     public Tilemap from;
     public Text text;
@@ -28,11 +27,11 @@ public class Tester : MonoBehaviour
         InvokeRepeating("UpdatePosition", 0, 0.2f);
     }
 
-    // detects the environment every second
+    // prints the environment on screen 
     public void UpdatePosition()
     {
         info.DetectEnvironment();
-        List<TileBase> ts = toTest.GetTerrainTiles(transform.position, radius);
+        List<TileBase> ts = toTest.GetTerrainTiles(transform.position, info.foodValues.getRadius());
         counts = new Dictionary<string, int>();
         for (int i = 0; i < ts.Count; i++)
         {

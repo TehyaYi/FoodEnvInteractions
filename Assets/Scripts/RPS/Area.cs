@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// [Deprecated] A class that represents the area that a population lives on
+/// </summary>
 public class Area
 {
     //only contain a List of Vector3Int, defines what positions are accessible
