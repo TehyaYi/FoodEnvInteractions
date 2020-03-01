@@ -235,8 +235,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -338,6 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e7c86bea0c6489d85120b9ead0ba24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrain: {fileID: 366436305}
+  liquid: {fileID: 1654885440}
 --- !u!1 &221344174
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,8 +407,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -695,8 +693,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -6461,8 +6457,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -6553,8 +6547,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -6892,8 +6884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -7113,8 +7103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -7616,8 +7604,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  location: {x: 0, y: 0, z: 0}
-  map: {fileID: 366436305}
   accessibleTerrain:
   - {fileID: 11400000, guid: 58e95cdbfb300c14ca636e798065bfa0, type: 2}
   - {fileID: 11400000, guid: 592c8bce59c32ae48b1e5350f0899cc3, type: 2}
@@ -7783,12 +7769,12 @@ PrefabInstance:
     - target: {fileID: 357624510369086741, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.08
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 357624510369086741, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.89
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 357624510369086741, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
