@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class Population : MonoBehaviour
 {
-    [SerializeField] private int id;
+    [SerializeField] private int id; //id for RPM
     public List<TileBase> accessibleTerrain; //tiles that the pop can move through
 
     //TODO should be handled by other systems instead, just for testing
