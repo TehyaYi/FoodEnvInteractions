@@ -1,21 +1,17 @@
-﻿/*
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FoodSourceManager
 {
+    /*
     //Food source manager will be keeping references to the food sources and telling the food dis. sys 
-    //and environmental interactions sys. to update when they need to
+    //and environmental interactions sys. when they need to update
 
     //dictionary(?) of all active food source instances
     private IDictionary<int, FoodSource> foodSourceDict = new Dictionary<int, FoodSource>();
     private int currIndex = 0;
-
-
-    // Food distribution system
-    private RealisticFoodDistributionSystem foodDis = new RealisticFoodDistributionSystem();
-    public bool update = false;
 
     //Should we have instantiation functions for different food sources? and how to organize it all --maybe a table
 
@@ -64,4 +60,5 @@ public class FoodSourceManager
         this.foodDis.update(foodSourcesToDistribute);
         this.update = true;
     }
-} */
+    */
+} 
