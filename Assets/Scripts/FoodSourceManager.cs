@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodSourceManager
+public class FoodSourceManager : MonoBehaviour
 {
-    /*
     //Food source manager will be keeping references to the food sources and telling the food dis. sys 
     //and environmental interactions sys. when they need to update
 
@@ -13,10 +12,14 @@ public class FoodSourceManager
     private IDictionary<int, FoodSource> foodSourceDict = new Dictionary<int, FoodSource>();
     private int currIndex = 0;
 
-    //Should we have instantiation functions for different food sources? and how to organize it all --maybe a table
+    //private RealisticFoodDistributionSystem foodDis = new RealisticFoodDistributionSystem();
+    //private RegionalFoodDistribution_naive regFoodDist = new RegionalFoodDistribution_naive();
+
 
     // This is a refference of all the food sources objects that will be given when the manager is initiate
     public List<FoodSource> allFoodSources;
+    private GameObject[] foodSources;
+
 
 
     private List<FoodSource> getAllFoodSourceByType(string type)
@@ -57,8 +60,11 @@ public class FoodSourceManager
     private void updateFoodSource(FoodSource foodSource)
     {
         List<FoodSource> foodSourcesToDistribute = getAllFoodSourceByType(foodSource.getFoodType());
-        this.foodDis.update(foodSourcesToDistribute);
-        this.update = true;
+        this.foodSources = GameObject.FindGameObjectsWithTag("foodSource");
+
+        //this.foodDis.update(foodSourcesToDistribute);
+        //this.regFoodDist.needToDistributeFood = true;
+        //this.update = true;
+        distributeFood(foodSourcesToDistribute);
     }
-    */
 } 
