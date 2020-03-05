@@ -10,10 +10,16 @@ using UnityEngine;
 
 public class FoodDistribution_tester : MonoBehaviour
 {
+    private GameObject[] foodSources;
  
-    public void distributeFood()
+    //public void distributeFood()
+    void Start()
     {
-        List<FoodSource> foodSources = getAllFoodOnMap();
+        this.foodSources = GameObject.FindGameObjectsWithTag("foodSource");
+        foreach (GameObject foodSource in this.foodSources)
+        {
+            System.Console.WriteLine("This is working");
+        }
        //List<AnimalPopulation> listOfAnimals = getAllPopulations();
     }
 

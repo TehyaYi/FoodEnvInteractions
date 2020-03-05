@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class FoodSourceManager : MonoBehaviour
 {
     //Food source manager will be keeping references to the food sources and telling the food dis. sys 
@@ -68,3 +69,5 @@ public class FoodSourceManager : MonoBehaviour
         distributeFood(foodSourcesToDistribute);
     }
 } 
+
+*/
