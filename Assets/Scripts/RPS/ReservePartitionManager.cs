@@ -16,6 +16,7 @@ public class ReservePartitionManager : MonoBehaviour
     Dictionary <Vector3Int, long> accessMap;
     public Tilemap terrain;
     public Tilemap liquid; //currently not used
+    public FoodSource food;
 
     public void Awake() {
         if (ins != null && this != ins)
@@ -33,6 +34,15 @@ public class ReservePartitionManager : MonoBehaviour
         }
         pops = new List<Population>();
         accessMap = new Dictionary<Vector3Int, long>();
+    }
+
+    public void Update()
+    {
+        foreach(Population pop in pops)
+            if (CanAccess(pop, food.transform.position))
+            {
+                pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
+            }
     }
 
     ///<summary>

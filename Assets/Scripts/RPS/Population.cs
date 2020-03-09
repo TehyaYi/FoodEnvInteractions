@@ -14,8 +14,6 @@ public class Population : MonoBehaviour
     //TODO to be removed, for testing (i.e. can this animal eat this food?)
     public FoodSource food; 
 
-    //Deprecated due to RPM
-    //private Area area; //area <-> accessMap, where the pop can go
     public ReservePartitionManager RPM;
 
     private void Start()
@@ -25,25 +23,6 @@ public class Population : MonoBehaviour
         RPM.AddPopulation(this);
         //Testing
         print(RPM.CanAccess(this, food.transform.position));
-    }
-
-    /* Deprecated
-    public Area GetArea() {
-        return area;
-    }
-
-    public List<Vector3Int> GetMap()
-    {
-        return area.GetMap();
-    }
-    */
-
-    //for visual testing, move towards food if accessible
-    private void Update()
-    {
-        if (RPM.CanAccess(this, food.transform.position)) {
-            transform.Translate((food.transform.position - transform.position) * 0.01f);
-        }
     }
 
     /// <summary>
