@@ -16,6 +16,8 @@ public class Population : MonoBehaviour
 
     public ReservePartitionManager RPM;
 
+    public int space; //amount of living space
+
     private void Start()
     {
         RPM = ReservePartitionManager.ins;
@@ -36,4 +38,11 @@ public class Population : MonoBehaviour
     public int getID() {
         return id;
     }
+
+    public void setSpace(int nsp)
+    {
+        space = nsp;
+    }
+
+    public int getSpace() { return space; }
 }

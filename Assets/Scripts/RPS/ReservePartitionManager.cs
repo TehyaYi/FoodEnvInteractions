@@ -125,6 +125,8 @@ public class ReservePartitionManager : MonoBehaviour
             accessMap[pos] |= 1L << pop.getID();
         }
 
+        pop.setSpace(accessible.Count);
+
     }
 
     ///<summary>
