@@ -870,6 +870,7 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
+  type: 2
   tileLayer: 1
   replacementLayers: 0200000003000000040000000500000006000000
   constraintLayers: 

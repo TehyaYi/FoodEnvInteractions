@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class Population : MonoBehaviour
 {
     [SerializeField] private int id; //id for RPM
-    public List<TileBase> accessibleTerrain; //tiles that the pop can move through
+    public List<TileType> accessibleTerrain; //tiles that the pop can move through
 
     //TODO should be handled by other systems instead, just for testing
     public List<FoodSource.FoodTypes> foodtypes; //types of food that the animal can eat

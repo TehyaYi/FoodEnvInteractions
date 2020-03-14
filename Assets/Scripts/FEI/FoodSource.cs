@@ -45,8 +45,9 @@ public class FoodSource : MonoBehaviour
         print("total_output: " + totalOutput);
     }
 
-    
-    //Detects what is in the environment and populate rawValues[]
+    /// <summary>
+    /// Detects what is in the environment and populate rawValues[].
+    /// </summary>
     public void DetectEnvironment()
     {
         NeedScriptableObject[] rso = foodValues.getNSO();
@@ -63,32 +64,16 @@ public class FoodSource : MonoBehaviour
                 {
                     case "Terrain":
                         //get tiles around the food source and return as an array of integers
-                        //each type of plant should have an id, e.g. 0 = rock, 1 = sand, 2 = dirt, 3 = grass etc.
-
-                        //this is just to demonstrate that it is working
-                        //Tiles[] tiles = new Tiles[] { Tiles.Rock, Tiles.Rock, Tiles.Grass, Tiles.Grass,
-                        //    Tiles.Dirt, Tiles.Sand, Tiles.Dirt, Tiles.Dirt }; //2 rocks, 1 sand, 3 dirt, 2 grass
-
-                        TileBase[] tiless = tileRetriever.GetTerrainTiles(transform.position, foodValues.getRadius()).ToArray();
+                        TerrainTile[] terrainTiles = tileRetriever.GetTiles(transform.position, foodValues.getRadius()).ToArray();
 
                         //quick check for no tiles read
-                        if (tiless.Length == 0) { rawValues[i] = 0; break; }
+                        if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
 
-                        List<Tiles> tiles = new List<Tiles>();
+                        List<TileType> tiles = new List<TileType>();
 
-                        Dictionary<string, Tiles> nameSwap = new Dictionary<string, Tiles>();
-                        nameSwap.Add("TileMap_1", Tiles.Grass);
-                        nameSwap.Add("TileMap_4", Tiles.Rock);
-                        nameSwap.Add("TileMap_0", Tiles.Dirt);
-                        nameSwap.Add("Grass", Tiles.Dirt);
-                        nameSwap.Add("Dirt", Tiles.Dirt);
-                        nameSwap.Add("Sand", Tiles.Sand);
-
-                        for (int ind = 0; ind < tiless.Length; ind++) {
-                            if(nameSwap.ContainsKey(tiless[ind].name))
-                                tiles.Add(nameSwap[tiless[ind].name]);
+                        foreach (TerrainTile tile in terrainTiles) {
+                            tiles.Add(tile.type);
                         }
-
                         //maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
                         //because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
                         float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles.ToArray()) / tiles.Count;

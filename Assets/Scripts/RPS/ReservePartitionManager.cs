@@ -14,9 +14,11 @@ public class ReservePartitionManager : MonoBehaviour
     List<Population> pops;
     Stack<int> openID;
     Dictionary <Vector3Int, long> accessMap;
-    public Tilemap terrain;
-    public Tilemap liquid; //currently not used
     public FoodSource food;
+
+    GetTerrainTile GTT; //GetTerrainTile API from Virgil
+    Tilemap reference; //a reference tilemap for converting cell position
+
 
     public void Awake() {
         if (ins != null && this != ins)
@@ -34,6 +36,8 @@ public class ReservePartitionManager : MonoBehaviour
         }
         pops = new List<Population>();
         accessMap = new Dictionary<Vector3Int, long>();
+        GTT = FindObjectOfType<GetTerrainTile>();
+        reference = GTT.GetComponent<TilePlacementController>().tilemapList[0];
     }
 
     public void Update()
@@ -75,7 +79,6 @@ public class ReservePartitionManager : MonoBehaviour
     ///Populate the access map for a population with depth first search.
     ///</summary>
     private void GenerateMap(Population pop) {
-
         if (!pops.Contains(pop)) {
             AssignID(pop);
         }
@@ -85,7 +88,7 @@ public class ReservePartitionManager : MonoBehaviour
         Vector3Int cur;
 
         //starting location
-        Vector3Int location = terrain.WorldToCell(pop.transform.position);
+        Vector3Int location = reference.WorldToCell(pop.transform.position);
         stack.Push(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
@@ -100,7 +103,8 @@ public class ReservePartitionManager : MonoBehaviour
 
             //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
             //implementation may change when liquid gets added
-            if (terrain.HasTile(cur) && pop.accessibleTerrain.Contains(terrain.GetTile(cur)))
+            TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
+            if (tile != null && pop.accessibleTerrain.Contains(tile.type))
             {
                 //save the Vector3Int since it is already checked
                 accessible.Add(cur);
@@ -146,7 +150,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population pop, Vector3 toWorldPos)
     {
         //convert to map position
-        Vector3Int mapPos = terrain.WorldToCell(toWorldPos);
+        Vector3Int mapPos = reference.WorldToCell(toWorldPos);
 
         //if accessible
         //check if the nth bit is set (i.e. accessible for the pop)

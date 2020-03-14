@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Space Maple
   m_EditorClassIdentifier: 
   base_output: 25
-  radius: 3
+  radius: 2
   needSO:
   - {fileID: 11400000, guid: 130257bfde2cf434788ae4fc45047e01, type: 2}
   - {fileID: 11400000, guid: 75541e3d4567c4724b1290de6cf34ee5, type: 2}

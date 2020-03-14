@@ -11,13 +11,17 @@ public class TileRetriever : MonoBehaviour
     public Tilemap GetTerrain() { return terrain; }
     public Tilemap GetLiquid() { return liquid; }
 
-    //Get tiles at world_pos with a radius of radius
-    public List<TileBase> GetTiles(Vector3 world_pos, int radius, Tilemap from) {
+    /// <summary>
+    /// Get tiles at world_pos with a radius of radius.
+    /// </summary>
+    public List<TerrainTile> GetTiles(Vector3 world_pos, int radius) {
+        GetTerrainTile api = FindObjectOfType<GetTerrainTile>();
+
         //list of tiles to return
-        List<TileBase> tiles = new List<TileBase>();
+        List<TerrainTile> tiles = new List<TerrainTile>();
 
         //position of object in terms of tilemap
-        Vector3Int cell_pos = from.WorldToCell(world_pos);
+        Vector3Int cell_pos = terrain.WorldToCell(world_pos);
 
         //prototype nested loop -- could be a little more efficient
         for (int r = cell_pos.y - radius; r <= cell_pos.y + radius; r++) {
@@ -33,9 +37,10 @@ public class TileRetriever : MonoBehaviour
                 {
                     Vector3Int pos = new Vector3Int(c, r, 0);
                     //if there's a tile -- condition may be changed later, such as if the tile is a certain type
-                    if (from.HasTile(pos)) 
+                    TerrainTile tile = api.GetTerrainTileAtLocation(pos);
+                    if (tile != null) 
                     {
-                        tiles.Add(from.GetTile(pos));//Get the tile
+                        tiles.Add(tile);//Get the tile
                     }
                 }
             }
@@ -43,7 +48,4 @@ public class TileRetriever : MonoBehaviour
         }
         return tiles;
     }
-    public List<TileBase> GetTerrainTiles(Vector3 world_pos, int radius) { return GetTiles(world_pos, radius, terrain); }
-    public List<TileBase> GetLiquidTiles(Vector3 world_pos, int radius) { return GetTiles(world_pos, radius, liquid); }
-
 }

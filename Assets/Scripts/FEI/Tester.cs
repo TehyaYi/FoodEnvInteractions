@@ -24,14 +24,16 @@ public class Tester : MonoBehaviour
         nameSwap.Add("TileMap_0", "Dirt");
 
         from = toTest.GetTerrain();
-        InvokeRepeating("UpdatePosition", 0, 0.2f);
+        InvokeRepeating("UpdateDebugMenu", 0, 0.2f);
     }
 
-    // prints the environment on screen 
-    public void UpdatePosition()
+   /// <summary>
+   /// Updates debug menu
+   /// </summary>
+    public void UpdateDebugMenu()
     {
         info.DetectEnvironment();
-        List<TileBase> ts = toTest.GetTerrainTiles(transform.position, info.foodValues.getRadius());
+        List<TerrainTile> ts = toTest.GetTiles(transform.position, info.foodValues.getRadius());
         counts = new Dictionary<string, int>();
         for (int i = 0; i < ts.Count; i++)
         {

@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 [CreateAssetMenu]
 public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
-
+    public TileType type;
     public enum TileLayer
 	{
 		BaseLayer,

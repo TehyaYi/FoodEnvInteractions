@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //temporary enum before merging with 
-public enum Tiles { Rock, Sand, Dirt, Grass };
+public enum TileType { Rock, Sand, Dirt, Grass, Liquid };
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainNeedRangeScriptableObject", order = 2)]
 public class TerrainNeedScriptableObject : NeedScriptableObject
@@ -14,26 +14,26 @@ public class TerrainNeedScriptableObject : NeedScriptableObject
     [Serializable]
     public struct Dict
     {
-        public Tiles type;
+        public TileType type;
         public int value; //value of tile
     }
     [SerializeField] private Dict[] tileVal = new Dict[4];
 
     //Workaround: dictionary to be initialized
-    private Dictionary<Tiles, int> tileDic;
+    private Dictionary<TileType, int> tileDic;
 
     //Gets called when value of scriptable object changes in the inspector
     private void OnValidate()
     {
         //initialize the dictionary
-        tileDic = new Dictionary<Tiles, int>();
+        tileDic = new Dictionary<TileType, int>();
         for(int i = 0; i < tileVal.Length; i++)
         {
             tileDic.Add(tileVal[i].type, tileVal[i].value);
         }
     }
 
-    public float getValue(Tiles tile)
+    public float getValue(TileType tile)
     {
         try{ //go in dictionary to retrieve value of tile
             return tileDic[tile];
@@ -43,7 +43,7 @@ public class TerrainNeedScriptableObject : NeedScriptableObject
         }
     }
 
-    public float getValue(Tiles[] tiles)
+    public float getValue(TileType[] tiles)
     {
         float value = 0;
         for (int i = 0; i < tiles.Length; i++)
