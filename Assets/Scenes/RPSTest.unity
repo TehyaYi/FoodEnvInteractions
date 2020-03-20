@@ -239,7 +239,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &113445427
 Transform:
   m_ObjectHideFlags: 0
@@ -247,13 +249,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113445425}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.75, y: 3.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 982402216}
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &113445428
 Rigidbody2D:
@@ -365,7 +367,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &221344178
 Transform:
   m_ObjectHideFlags: 0
@@ -373,13 +377,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221344174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 12.3, y: 8.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 653363029}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &227102533
 GameObject:
@@ -650,7 +654,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &246568881
 Transform:
   m_ObjectHideFlags: 0
@@ -658,13 +664,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246568879}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 9.27, y: -3.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 48264162}
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &246568882
 Rigidbody2D:
@@ -6201,6 +6207,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0300431448e1c6488fa0aa4ad31aa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &678056629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678056630}
+  m_Layer: 0
+  m_Name: Pops
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &678056630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678056629}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 873290854}
+  - {fileID: 221344178}
+  - {fileID: 1439849303}
+  - {fileID: 1879283918}
+  - {fileID: 809557653}
+  - {fileID: 1065757056}
+  - {fileID: 113445427}
+  - {fileID: 246568881}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6275,7 +6319,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 7e-45, z: 3.98e-42, w: 1.04e-43}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -7484,7 +7528,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &809557653
 Transform:
   m_ObjectHideFlags: 0
@@ -7492,13 +7538,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809557651}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.29, y: -2.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1724772122}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &809557654
 Rigidbody2D:
@@ -10543,7 +10589,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &873290854
 Transform:
   m_ObjectHideFlags: 0
@@ -10551,13 +10599,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873290852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.821436, y: 4.3645415, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 630034766}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &873290855
 Rigidbody2D:
@@ -10879,7 +10927,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &1065757056
 Transform:
   m_ObjectHideFlags: 0
@@ -10887,13 +10937,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065757054}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.77, y: 8.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1310096536}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1065757057
 Rigidbody2D:
@@ -10993,6 +11043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   food: {fileID: 479130229}
+  RPMDemo: 1
 --- !u!1 &1310096535
 GameObject:
   m_ObjectHideFlags: 0
@@ -11111,7 +11162,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &1439849303
 Transform:
   m_ObjectHideFlags: 0
@@ -11119,13 +11172,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439849301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 14.32, y: 2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 946826436}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1439849304
 Rigidbody2D:
@@ -13040,7 +13093,9 @@ MonoBehaviour:
   foodtypes: 00000000
   food: {fileID: 479130229}
   RPM: {fileID: 0}
-  space: 0
+  radius: 3
+  animalSize: 10
+  animalNumber: 100
 --- !u!4 &1879283918
 Transform:
   m_ObjectHideFlags: 0
@@ -13048,13 +13103,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879283916}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.51, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1956762298}
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 678056630}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1879283919
 Rigidbody2D:

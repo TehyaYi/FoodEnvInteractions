@@ -16,7 +16,16 @@ public class Population : MonoBehaviour
 
     public ReservePartitionManager RPM;
 
-    public int space; //amount of living space
+
+    //info below are for PopDensity
+
+    [SerializeField] public int radius = 3;//should probably implemented in Scriptable files
+    private int space;
+    [SerializeField] private float animalSize = 10;//e.g. 10 kg/animal
+    [SerializeField] private float animalNumber = 100;//e.g. Total of 100 animals
+
+
+
 
     private void Start()
     {
@@ -39,10 +48,15 @@ public class Population : MonoBehaviour
         return id;
     }
 
+    public int getRadius() { return radius; }
+
     public void setSpace(int nsp)
     {
         space = nsp;
     }
 
     public int getSpace() { return space; }
+
+    //size*number = 1000 kg
+    public float getPopSize() { return animalSize * animalNumber; }
 }

@@ -19,7 +19,11 @@ public class ReservePartitionManager : MonoBehaviour
     GetTerrainTile GTT; //GetTerrainTile API from Virgil
     Tilemap reference; //a reference tilemap for converting cell position
 
+    public bool RPMDemo = false; //if in demo
 
+    public List<Population> getPops() {
+        return pops;
+    }
     public void Awake() {
         if (ins != null && this != ins)
         {
@@ -42,11 +46,14 @@ public class ReservePartitionManager : MonoBehaviour
 
     public void Update()
     {
-        foreach(Population pop in pops)
-            if (CanAccess(pop, food.transform.position))
-            {
-                pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
-            }
+        if (RPMDemo) //if in demo
+        {
+            foreach (Population pop in pops)
+                if (CanAccess(pop, food.transform.position))
+                {
+                    pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
+                }
+        }
     }
 
     ///<summary>
@@ -55,16 +62,12 @@ public class ReservePartitionManager : MonoBehaviour
     public void AddPopulation(Population pop) {
         if (!pops.Contains(pop)){
             //ignore their old id and assign it a new one
-            AssignID(pop);
+            pop.setID(openID.Pop());
+            pops.Add(pop);
 
             //generate the map with the new id  
             GenerateMap(pop);
         }
-    }
-
-    private void AssignID(Population pop) {
-        pop.setID(openID.Pop());
-        pops.Add(pop);
     }
 
     ///<summary>
@@ -80,7 +83,7 @@ public class ReservePartitionManager : MonoBehaviour
     ///</summary>
     private void GenerateMap(Population pop) {
         if (!pops.Contains(pop)) {
-            AssignID(pop);
+            AddPopulation(pop);
         }
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
         List<Vector3Int> accessible = new List<Vector3Int>();
@@ -96,7 +99,7 @@ public class ReservePartitionManager : MonoBehaviour
             //next point
             cur = stack.Pop();
 
-            if (accessible.Contains(cur) || unaccessible.Contains(cur)){
+            if (accessible.Contains(cur) || unaccessible.Contains(cur)) {
                 //checked before, move on
                 continue;
             }
@@ -129,7 +132,17 @@ public class ReservePartitionManager : MonoBehaviour
             accessMap[pos] |= 1L << pop.getID();
         }
 
-        pop.setSpace(accessible.Count);
+        //calculate the number of accessible tiles within radius (= living space)
+        int radius = pop.getRadius();
+        int space = 0;
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius+Mathf.Abs(x); y <= radius-Mathf.Abs(x); y++) {
+                if (CanAccess(pop, new Vector3Int(x, y, 0))) {
+                    space++;
+                }
+            }
+        }
+        pop.setSpace(space);
 
     }
 
@@ -151,6 +164,17 @@ public class ReservePartitionManager : MonoBehaviour
     {
         //convert to map position
         Vector3Int mapPos = reference.WorldToCell(toWorldPos);
+
+        return CanAccess(pop, mapPos);
+    }
+
+    ///<summary>
+    ///Check if a population can access CellPos.
+    ///</summary>
+    public bool CanAccess(Population pop, Vector3Int CellPos)
+    {
+        //convert to map position
+        Vector3Int mapPos = CellPos;
 
         //if accessible
         //check if the nth bit is set (i.e. accessible for the pop)
@@ -215,5 +239,9 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         return consumers;
+    }
+
+    public Vector3Int GetReferenceCellPos(Vector3 worldPos) {
+        return reference.WorldToCell(worldPos);
     }
 }
