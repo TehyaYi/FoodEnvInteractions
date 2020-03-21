@@ -62,7 +62,7 @@ public class ReservePartitionManager : MonoBehaviour
     public void AddPopulation(Population pop) {
         if (!pops.Contains(pop)){
             //ignore their old id and assign it a new one
-            pop.setID(openID.Pop());
+            pop.SetID(openID.Pop());
             pops.Add(pop);
 
             //generate the map with the new id  
@@ -71,11 +71,11 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     ///<summary>
-    ///Remove a population from the RPM
+    ///Remove a population from the RPM.
     ///</summary>
     public void RemovePopulation(Population pop) {
         pops.Remove(pop);
-        openID.Push(pop.getID()); //free ID
+        openID.Push(pop.GetID()); //free ID
     }
 
     ///<summary>
@@ -129,21 +129,8 @@ public class ReservePartitionManager : MonoBehaviour
                 accessMap.Add(pos, 0L);
             }
             //set the pop.getID()th bit in accessMap[pos] to 1
-            accessMap[pos] |= 1L << pop.getID();
+            accessMap[pos] |= 1L << pop.GetID();
         }
-
-        //calculate the number of accessible tiles within radius (= living space)
-        int radius = pop.getRadius();
-        int space = 0;
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius+Mathf.Abs(x); y <= radius-Mathf.Abs(x); y++) {
-                if (CanAccess(pop, new Vector3Int(x, y, 0))) {
-                    space++;
-                }
-            }
-        }
-        pop.setSpace(space);
-
     }
 
     ///<summary>
@@ -180,7 +167,7 @@ public class ReservePartitionManager : MonoBehaviour
         //check if the nth bit is set (i.e. accessible for the pop)
         if (accessMap.ContainsKey(mapPos))
         {
-            if (((accessMap[mapPos] >> pop.getID()) & 1L) == 1L)
+            if (((accessMap[mapPos] >> pop.GetID()) & 1L) == 1L)
             {
                 return true;
             }
@@ -207,41 +194,10 @@ public class ReservePartitionManager : MonoBehaviour
         return accessible;
     }
 
-    ///<summary>
-    ///[Deprecated] Check if a population can consume a food.
-    ///</summary>
-    public bool Consumes(Population pop, FoodSource food) {
-        //if accessible
-        //check if the nth bit is set (i.e. accessible for the pop)
-        if (CanAccess(pop, food.transform.position)) {
-            //if edible
-            if (pop.foodtypes.Contains(food.getType())) {
-                //both accessible and edible so pop consumes food
-                return true;
-            }
-        }
-
-        //pop can't consume the food
-        return false;
-    }
-
-    ///<summary>
-    ///[Deprecated] Go through pops and return a list of populations that can consume a food source.
-    ///</summary>
-    public List<Population> GetConsumers(FoodSource food) {
-        List<Population> consumers = new List<Population>();
-
-        foreach (Population pop in pops) {
-            //utilize Consumes()
-            if (Consumes(pop, food)) {
-                consumers.Add(pop);
-            }
-        }
-
-        return consumers;
-    }
-
-    public Vector3Int GetReferenceCellPos(Vector3 worldPos) {
+    /// <summary>
+    /// Converts a world position to cell position using the reference tilemap.
+    /// </summary>
+    public Vector3Int WorldToCell(Vector3 worldPos) {
         return reference.WorldToCell(worldPos);
     }
 }
