@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//temporary enum before merging with 
+//temporary enum before merging
 public enum TileType { Rock, Sand, Dirt, Grass, Liquid };
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainNeedRangeScriptableObject", order = 2)]
 public class TerrainNeedScriptableObject : NeedScriptableObject
 {
-
     //Thanks to Helical at https://answers.unity.com/questions/642431/dictionary-in-inspector.html
     //custom dictionary visible in inspector
     [Serializable]

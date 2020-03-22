@@ -5,23 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class TileRetriever : MonoBehaviour
 {
-    public Tilemap terrain;
-    public Tilemap liquid;
-
-    public Tilemap GetTerrain() { return terrain; }
-    public Tilemap GetLiquid() { return liquid; }
-
     /// <summary>
-    /// Get tiles at world_pos with a radius of radius.
+    /// Get TerrainTiles at world_pos with a radius of radius.
     /// </summary>
-    public List<TerrainTile> GetTiles(Vector3 world_pos, int radius) {
+    public static List<TerrainTile> GetTiles(Vector3 world_pos, int radius) {
         GetTerrainTile api = FindObjectOfType<GetTerrainTile>();
 
         //list of tiles to return
         List<TerrainTile> tiles = new List<TerrainTile>();
 
         //position of object in terms of tilemap
-        Vector3Int cell_pos = terrain.WorldToCell(world_pos);
+        Vector3Int cell_pos = ReservePartitionManager.ins.WorldToCell(world_pos);
 
         //prototype nested loop -- could be a little more efficient
         for (int r = cell_pos.y - radius; r <= cell_pos.y + radius; r++) {

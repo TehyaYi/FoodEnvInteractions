@@ -27,8 +27,6 @@ public class FoodSource : MonoBehaviour
     public float getOutput() { return totalOutput; }
     public FoodTypes getType() { return type; }
 
-    public TileRetriever tileRetriever;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +62,7 @@ public class FoodSource : MonoBehaviour
                 {
                     case "Terrain":
                         //get tiles around the food source and return as an array of integers
-                        TerrainTile[] terrainTiles = tileRetriever.GetTiles(transform.position, foodValues.getRadius()).ToArray();
+                        TerrainTile[] terrainTiles = TileRetriever.GetTiles(transform.position, foodValues.getRadius()).ToArray();
 
                         //quick check for no tiles read
                         if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
@@ -72,7 +70,7 @@ public class FoodSource : MonoBehaviour
                         List<TileType> tiles = new List<TileType>();
 
                         foreach (TerrainTile tile in terrainTiles) {
-                            tiles.Add(tile.type);
+                            tiles.Add(tile.type);//TileType tile.type is defined in TerrainNeedScriptableObject
                         }
                         //maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
                         //because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)

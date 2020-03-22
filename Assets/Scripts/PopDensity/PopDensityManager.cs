@@ -107,7 +107,7 @@ public class PopDensityManager : MonoBehaviour
         Vector3Int cellPos = rpm.WorldToCell(pop.transform.position);
 
         //find the number of accessible tiles within radius (≈ living space) and populate Density Map
-        int radius = pop.GetRadius();
+        int radius = pop.radius;
         int space = 0;
         //loop through each tile within radius
         for (int x = -radius; x <= radius; x++)
@@ -141,7 +141,7 @@ public class PopDensityManager : MonoBehaviour
             return -1;
 
         //calculate the number of accessible tiles within radius (≈ living space)
-        int radius = pop.GetRadius();
+        int radius = pop.radius;
         float density = 0;
         //loop through each tile within radius, sum up weight from all of them
         for (int x = -radius; x <= radius; x++)
