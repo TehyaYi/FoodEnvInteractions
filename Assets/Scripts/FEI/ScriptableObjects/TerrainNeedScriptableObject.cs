@@ -5,6 +5,9 @@ using UnityEngine;
 //temporary enum before merging
 public enum TileType { Rock, Sand, Dirt, Grass, Liquid };
 
+/// <summary>
+/// Deprecated.
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/TerrainNeedRangeScriptableObject", order = 2)]
 public class TerrainNeedScriptableObject : NeedScriptableObject
 {

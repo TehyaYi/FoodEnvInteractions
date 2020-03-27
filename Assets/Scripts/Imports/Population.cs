@@ -39,9 +39,7 @@ public class Population : MonoBehaviour
 
     private void Start()
     {
-        ReservePartitionManager RPM = ReservePartitionManager.ins;
-
-        RPM.AddPopulation(this);
+        ReservePartitionManager.ins.AddPopulation(this);
         Count = 100;//For demo
     }
 

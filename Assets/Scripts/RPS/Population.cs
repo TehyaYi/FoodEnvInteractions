@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// Population class that contain essential data members for RPM and PDM
+/// [Deprecated]Population class that contain essential data members for RPM and PDM
 /// </summary>
 public class Populationt : MonoBehaviour
 {

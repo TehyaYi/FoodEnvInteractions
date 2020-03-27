@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Deprecated.
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LiquidNeedScriptableObject", order = 2)]
 public class LiquidNeedScriptableObject : NeedScriptableObject
 {
