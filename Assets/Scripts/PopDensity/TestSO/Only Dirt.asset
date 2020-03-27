@@ -9,22 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88700c0660c1441f19036cf1f7f3fbbd, type: 3}
-  m_Name: TerSM
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Only Dirt
   m_EditorClassIdentifier: 
-  need: 0
-  weight: 3.5
-  ranges:
-  - 2
-  - 3
-  - 1
-  - 2
-  tileVal:
-  - type: 0
-    value: 0
-  - type: 1
-    value: 1
-  - type: 2
-    value: 2
-  - type: 3
-    value: 3
+  size: 1
+  accessibleTerrain: 02000000
+  speciesName: 
+  dominance: 0
+  growthFactor: 0
+  needs: []
+  sprite: {fileID: 0}

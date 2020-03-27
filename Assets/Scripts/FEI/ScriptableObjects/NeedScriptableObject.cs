@@ -2,78 +2,112 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+
+public enum PlantNeedType { Terrain, RLiquid, YLiquid, BLiquid, GasX, GasY, GasZ, Temperature }
+
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/NeedScriptableObject", order = 1)]
 public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptableObject>
 {
-	//passing string to make it more readable in code
-	private string[] need_names = {"Terrain", "Liquid", "Gas X","Gas Y","Gas Z","Temperature"};
-    
-	//using enum to create a dropdown list
-	public enum Needs{ Terrain,Liquid,GasX,GasY,GasZ,Temperature};
-	[SerializeField] private Needs need = Needs.GasX;
+	[SerializeField] private PlantNeedType type = default;
+	public PlantNeedType Type { get => type; }
+	[Range(1.0f, 10.0f)]
+	[SerializeField] private int severity = 1;
+	public int Severity { get => severity; }
+    //public enum NeedCondition { Bad, Neutral, Good } as defined in SpeciesNeed.cs
+    [SerializeField] private List<NeedCondition> conditions = default;
+	[SerializeField] private List<float> thresholds = default;
 
-	[Tooltip("Weight when determining output")]
-	[SerializeField] private float weight = 0;
+    /// <summary>
+    /// Compares a value with the condition thresholds and returns the associated condition.
+    /// </summary>
+    /// <param name="value">The value to compare to the need thresholds</param>
+    /// <returns></returns>
+    public NeedCondition GetCondition(float value)
+    {
+        // If there is only one condition, return it.
+        if (conditions.Count == 1) return conditions[0];
+        
+        NeedCondition needCondition = NeedCondition.Bad;
 
-    [Tooltip("[Good Low, Good High, Mod Low, Mod High]")]
-    [SerializeField] private float[] ranges = new float[4];
-    
-	//passing string to make it more readable in code
-    public string getName(){ return need_names[(int)need]; }
+        // Below or above threshold.
+        if (value <= thresholds[0])
+        {
+            needCondition = conditions[0];
+        }
+        else if (value >= thresholds[thresholds.Count - 1])
+        {
+            needCondition = conditions[thresholds.Count];
+        }
+        // Between threshold values.
+        for (int i = 0; i < thresholds.Count - 1; i++)
+        {
+            if ((value >= thresholds[i]) && (value < thresholds[i + 1]))
+            {
+                needCondition = conditions[i+1];
+            }
+        }
+        return needCondition;
+    }
 
-    public float getWeight(){ return weight; }
+    public void OnValidate()
+    {
+        if (conditions.Count == 0)
+        {
+            conditions.Add(NeedCondition.Good);
+        }
 
-    public float[] getRanges(){ return ranges; }
+        while (conditions.Count < thresholds.Count + 1)
+        {
+            thresholds.RemoveAt(thresholds.Count - 1);
+        }
+        while (conditions.Count > thresholds.Count + 1)
+        {
+            if (thresholds.Count == 0)
+            {
+                thresholds.Add(0);
+            }
+            else
+            {
+                thresholds.Add(thresholds[thresholds.Count - 1] + 1);
+            }
+        }
 
-    public Needs getNeed() { return need; }
+        for (var i = 0; i < thresholds.Count - 1; i++)
+        {
+            if (thresholds[i + 1] <= thresholds[i])
+            {
+                thresholds[i + 1] = thresholds[i] + 1;
+            }
+        }
 
+    }
 
-	//Calculate how good the need are met and return as int condition
-	//0 = bad, 1 = moderate, 2 = good
-	//values = current value of the need
-	public int calculateCondition(float val) {
-		int condition;
-		if (val >= ranges[0] && val <= ranges[1] &&
-			   !(ranges[0] == 0 && ranges[1] == 0))
-		{//upper and lower being 0 means no value satisfies
-			condition = 2;
-		}
-		else if (val >= ranges[2] && val <= ranges[3] &&
-		   !(ranges[2] == 0 && ranges[3] == 0))
-		{//upper and lower being 0 means no value satisfies
-			condition = 1;
-		}
-		else
-		{
-			condition = 0;
-		}
-		return condition;
-	}
 
     //to be sorted in FSO
-	public int CompareTo(NeedScriptableObject other) {
-		if (need < other.need)
-		{
-			return -1;
-		}
-		else if (need > other.need)
-		{
-			return 1;
-		}
-		else { //need == other.need
-			if (weight < other.weight)
-			{
-				return -1;
-			}
-			else if (weight > other.weight)
-			{
-				return 1;
-			}
-			else //need and weight are both equal
-			{
-				return 0;
-			}
+    public int CompareTo(NeedScriptableObject other) {
+        if (type < other.type)
+        {
+            return -1;
+        }
+        else if (type > other.type)
+        {
+            return 1;
+        }
+        else { //type == other.type
+            if (severity < other.severity)
+            {
+                return -1;
+            }
+            else if (severity > other.severity)
+            {
+                return 1;
+            }
+            else //type and severity are both equal
+            {
+                return 0;
+            }
         }
     }
 }

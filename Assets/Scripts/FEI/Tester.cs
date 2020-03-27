@@ -26,7 +26,7 @@ public class Tester : MonoBehaviour
     public void UpdateDebugMenu()
     {
         info.DetectEnvironment();
-        List<TerrainTile> ts = TileRetriever.GetTiles(transform.position, info.foodValues.getRadius());
+        List<TerrainTile> ts = TileRetriever.GetTiles(transform.position, info.Species.Radius);
         counts = new Dictionary<string, int>();
         for (int i = 0; i < ts.Count; i++)
         {
@@ -39,11 +39,11 @@ public class Tester : MonoBehaviour
             }
         }
         string end = "";
-        end += "Total Output: " + info.getOutput() + "\n";
-        end += "Position on Tilemap: "+ReservePartitionManager.ins.WorldToCell(transform.position) + "\n";
-        end += "Terrain raw value: " + info.getRawValues()[0] + "\n";
+        end += $"Total Output: {info.TotalOutput}\n";
+        end += $"Position on Tilemap: {ReservePartitionManager.ins.WorldToCell(transform.position)}\n";
+        end += $"Terrain raw value: {info.RawValues[0]}, {info.Conditions[0]}\n";
         foreach (KeyValuePair<string,int> kp in counts){
-            end += kp.Key + ": " + kp.Value + "\n";
+            end += $"{kp.Key}: {kp.Value}\n";
         }
         text.text = end;
     }

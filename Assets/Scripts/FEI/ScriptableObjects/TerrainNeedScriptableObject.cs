@@ -22,8 +22,9 @@ public class TerrainNeedScriptableObject : NeedScriptableObject
     private Dictionary<TileType, int> tileDic;
 
     //Gets called when value of scriptable object changes in the inspector
-    private void OnValidate()
+    public void OnValidate()
     {
+        base.OnValidate();
         //initialize the dictionary
         tileDic = new Dictionary<TileType, int>();
         for(int i = 0; i < tileVal.Length; i++)

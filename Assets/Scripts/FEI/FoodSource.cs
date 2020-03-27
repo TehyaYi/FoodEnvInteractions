@@ -8,35 +8,36 @@ public class FoodSource : MonoBehaviour
     //using enum to create a dropdown list
     public enum FoodTypes { SpaceMaple, Food2, Food3, Food4, Food5 };
     [SerializeField] private FoodTypes type;
+    public FoodTypes Type { get => type; }
 
     //ScriptableObject to read from
-    public FoodScriptableObject foodValues;
+    [SerializeField] private FoodScriptableObject species;
+    public FoodScriptableObject Species { get => species; }
 
     // For debugging, might be removed later
     //How much of each need is provided, raw value of needs
     [SerializeField] private float[] rawValues;
+    public float[] RawValues { get => rawValues; }
 
     //How well each need is provided
-    [SerializeField] private int[] conditions;
+    [SerializeField] private NeedCondition[] conditions;
+    public NeedCondition[] Conditions { get => conditions; }
 
     [SerializeField] private float totalOutput;
+    public float TotalOutput { get => totalOutput; }
 
     public GameManager gameManager;
-
-    public float[] getRawValues() { return rawValues; }
-    public float getOutput() { return totalOutput; }
-    public FoodTypes getType() { return type; }
 
     // Start is called before the first frame update
     void Start()
     {
-        int numNeeds = foodValues.getNSO().Length;
+        int numNeeds = species.Needs.Length;
         rawValues = new float[numNeeds];
-        conditions = new int[numNeeds];
+        conditions = new NeedCondition[numNeeds];
         totalOutput = 0;
 
-        if (foodValues == null) {
-            print("Error: foodValues is not set");
+        if (species == null) {
+            print("Error: species is not set");
         }
 
         DetectEnvironment();
@@ -48,9 +49,9 @@ public class FoodSource : MonoBehaviour
     /// </summary>
     public void DetectEnvironment()
     {
-        NeedScriptableObject[] rso = foodValues.getNSO();
-        float[] weights = foodValues.getWeights();
-        string[] needs = foodValues.getNeeds();
+        NeedScriptableObject[] needs = species.Needs;
+        float[] weights = species.Severities;
+        PlantNeedType[] types = species.Types;
 
         //TODO Implement liquid
         for (int i = 0; i < weights.Length; i++)
@@ -58,58 +59,113 @@ public class FoodSource : MonoBehaviour
             if (weights[i] > 0)
             { //Lazy evaluation, only detect if it matters
                 //Determine need values
-                switch (needs[i])
+                switch (types[i])
                 {
-                    case "Terrain":
+                    case PlantNeedType.Terrain:
                         //get tiles around the food source and return as an array of integers
-                        TerrainTile[] terrainTiles = TileRetriever.GetTiles(transform.position, foodValues.getRadius()).ToArray();
+                        TerrainTile[] terrainTiles = TileRetriever.GetTiles(transform.position, species.Radius).ToArray();
 
                         //quick check for no tiles read
                         if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
 
                         List<TileType> tiles = new List<TileType>();
-
-                        foreach (TerrainTile tile in terrainTiles) {
+                        foreach (TerrainTile tile in terrainTiles)
+                        {
                             tiles.Add(tile.type);//TileType tile.type is defined in TerrainNeedScriptableObject
                         }
+
+                        //imported from TerrainNeedScriptableObject
+                        float value = 0;
+                        for (int ind = 0; ind < tiles.Count; ind++)
+                        {
+                            try
+                            {
+                                value += species.TileDic[tiles[ind]];
+                            }
+                            catch (KeyNotFoundException)
+                            {
+                                //tiles is not contained in tileValue
+                                Debug.LogError("Tile not found in TileDic.");
+                            }
+                        }
+
                         //maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
                         //because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
-                        float avgValue = ((TerrainNeedScriptableObject)rso[i]).getValue(tiles.ToArray()) / tiles.Count;
+                        float avgValue = value / tiles.Count;
                         rawValues[i] = avgValue;
                         break;
-                    case "Gas X":
+                    case PlantNeedType.GasX:
                         //Read value from some class that handles atmosphere
                         rawValues[i] = gameManager.getGX();
                         break;
-                    case "Gas Y":
+                    case PlantNeedType.GasY:
                         //Read value from some class that handles atmosphere
                         rawValues[i] = gameManager.getGY();
                         break;
-                    case "Gas Z":
+                    case PlantNeedType.GasZ:
                         //Read value from some class that handles atmosphere
                         rawValues[i] = gameManager.getGZ();
                         break;
-                    case "Temperature":
+                    case PlantNeedType.Temperature:
                         //Read value from some class that handles temperature
                         rawValues[i] = gameManager.getTemp();
                         break;
-                    case "Liquid":
-                        //TO-DO
+                    case PlantNeedType.RLiquid:
+                        //TODO
                         //get liquid tiles around the food source and return as an array of tiles
-                        //find some way to calculate the value if there are two bodies of water
-                        float[,] liquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
+                        float[,] RLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
 
-                        rawValues[i] = ((LiquidNeedScriptableObject)rso[i]).getValue(liquid);
-                        break;
+                        conditions[i] = NeedCondition.Bad;
+                        for (int r = 0; r < RLiquid.GetLength(0); r++) {
+                            NeedCondition temp = needs[i].GetCondition(RLiquid[r, 0]);
+                            if (temp > conditions[i]) {
+                                conditions[i] = temp;
+                                rawValues[i] = RLiquid[r, 0];
+                            }
+                        }
+                        continue; //already calculated condition
+                    case PlantNeedType.YLiquid:
+                        //TODO
+                        //get liquid tiles around the food source and return as an array of tiles
+                        float[,] YLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
+
+                        conditions[i] = NeedCondition.Bad;
+                        for (int r = 0; r < YLiquid.GetLength(0); r++)
+                        {
+                            NeedCondition temp = needs[i].GetCondition(YLiquid[r, 1]);
+                            if (temp > conditions[i])
+                            {
+                                conditions[i] = temp;
+                                rawValues[i] = YLiquid[r, 0];
+                            }
+                        }
+                        continue; //already calculated condition
+                    case PlantNeedType.BLiquid:
+                        //TODO
+                        //get liquid tiles around the food source and return as an array of tiles
+                        float[,] BLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
+
+                        conditions[i] = NeedCondition.Bad;
+                        for (int r = 0; r < BLiquid.GetLength(0); r++)
+                        {
+                            NeedCondition temp = needs[i].GetCondition(BLiquid[r, 2]);
+                            if (temp > conditions[i])
+                            {
+                                conditions[i] = temp;
+                                rawValues[i] = BLiquid[r, 0];
+                            }
+                        }
+                        continue; //already calculated condition
                     default:
                         Debug.LogError("Error: No need name matches.");
+                        rawValues[i] = 0;
                         break;
                 }
-                conditions[i] = rso[i].calculateCondition(rawValues[i]);
+                conditions[i] = needs[i].GetCondition(rawValues[i]);
             }
         }
 
         //calculate output based on conditions
-        totalOutput = FoodOutputCalculator.CalculateOutput(foodValues, conditions);
+        totalOutput = FoodOutputCalculator.CalculateOutput(species, conditions);
     }
 }

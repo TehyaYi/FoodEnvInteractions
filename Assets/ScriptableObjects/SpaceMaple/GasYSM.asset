@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9847f0f25e10a4fde973389e5a87e980, type: 3}
   m_Name: GasYSM
   m_EditorClassIdentifier: 
-  need: 3
-  weight: 0.5
-  ranges:
-  - 0.4
-  - 1
-  - 0.3
-  - 0.4
+  type: 5
+  severity: 1
+  conditions: 000000000100000002000000
+  thresholds:
+  - 0
+  - 0.5

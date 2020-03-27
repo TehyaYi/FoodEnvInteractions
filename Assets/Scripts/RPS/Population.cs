@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// Population class that contain essential data members for RPM and PDM
 /// </summary>
-public class Population : MonoBehaviour
+public class Populationt : MonoBehaviour
 {
     //Considering using the auto implementation { get; set; } but not exactly sure of the convention
     //to be cleaned up afterwards
@@ -34,9 +34,9 @@ public class Population : MonoBehaviour
     {
         RPM = ReservePartitionManager.ins;
 
-        RPM.AddPopulation(this);
+        //RPM.AddPopulation(this);
         //Testing
-        print(RPM.CanAccess(this, food.transform.position));
+        //print(RPM.CanAccess(this, food.transform.position));
     }
 
     /// <summary>

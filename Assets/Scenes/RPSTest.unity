@@ -234,12 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 0200000004000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: 7e342db4dd37a47d0853dc761d010463, type: 2}
 --- !u!4 &113445427
 Transform:
   m_ObjectHideFlags: 0
@@ -360,12 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 02000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: c08d9d531f43a4cefb9e08d4f4d32a74, type: 2}
 --- !u!4 &221344178
 Transform:
   m_ObjectHideFlags: 0
@@ -645,12 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 01000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: 3447fcb7ace8e41a99df17e425d3c7b7, type: 2}
 --- !u!4 &246568881
 Transform:
   m_ObjectHideFlags: 0
@@ -1038,7 +1023,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 6
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1128,7 +1113,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1537,14 +1522,14 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: -868843489079193412, guid: 61bdd3f6ec27939478c93d4c4adb6947,
       type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 4404239766487757846, guid: 61bdd3f6ec27939478c93d4c4adb6947,
       type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -8536650462225493868, guid: 61bdd3f6ec27939478c93d4c4adb6947,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 19
     m_Data: {fileID: -2789055109191659647, guid: 61bdd3f6ec27939478c93d4c4adb6947,
       type: 3}
@@ -7512,12 +7497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 0100000002000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: 7c4e0a5e162894102aa30764002a1ab9, type: 2}
 --- !u!4 &809557653
 Transform:
   m_ObjectHideFlags: 0
@@ -10571,12 +10551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 010000000200000003000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: a9af3a00dbf234b9f992497016dcd2e8, type: 2}
 --- !u!4 &873290854
 Transform:
   m_ObjectHideFlags: 0
@@ -10907,12 +10882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 010000000200000003000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: a9af3a00dbf234b9f992497016dcd2e8, type: 2}
 --- !u!4 &1065757056
 Transform:
   m_ObjectHideFlags: 0
@@ -11140,12 +11110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 03000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: f0bfee12e57884ea5ac8df00c47e87ec, type: 2}
 --- !u!4 &1439849303
 Transform:
   m_ObjectHideFlags: 0
@@ -11230,10 +11195,10 @@ RectTransform:
   m_Father: {fileID: 1802085700}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -5}
-  m_SizeDelta: {x: 320, y: -10}
+  m_AnchoredPosition: {x: 310, y: -580}
+  m_SizeDelta: {x: 600, y: 1140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1458725858
 MonoBehaviour:
@@ -13069,12 +13034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d69b727c764d5b841c14604432a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessibleTerrain: 02000000
-  food: {fileID: 479130229}
-  RPM: {fileID: 0}
-  animalSize: 10
-  animalNumber: 100
-  space: 0
+  species: {fileID: 11400000, guid: c08d9d531f43a4cefb9e08d4f4d32a74, type: 2}
 --- !u!4 &1879283918
 Transform:
   m_ObjectHideFlags: 0
@@ -13226,6 +13186,12 @@ PrefabInstance:
       propertyPath: tileRetriever
       value: 
       objectReference: {fileID: 671067569}
+    - target: {fileID: 357624510369086738, guid: 131a844610d1549898f86b7541e05501,
+        type: 3}
+      propertyPath: species
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e4c6641b26a5457c9349021ee2101cf,
+        type: 2}
     - target: {fileID: 357624510369086739, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_Name

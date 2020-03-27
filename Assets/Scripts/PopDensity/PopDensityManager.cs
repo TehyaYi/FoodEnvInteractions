@@ -21,6 +21,8 @@ public class PopDensityManager : MonoBehaviour
     //Density map based on what species spreads throughout the area, similar to AccessMap in rpm
     Dictionary<Vector3Int, long> popDensityMap;
 
+    Dictionary<Population, int> spaces;
+
     //if in demo
     public bool PDMDemo; 
 
@@ -42,16 +44,18 @@ public class PopDensityManager : MonoBehaviour
         rpm = ReservePartitionManager.ins;
         Invoke("Init", 0.1f);
     }
+
     /// <summary>
     /// Initialize variables from rpm and generate new density map
     /// Has to be separate from start to allow populations to be added to the rpm
     /// </summary>
     public void Init() {
         popsByID = new Dictionary<int, Population>();
+        spaces = new Dictionary<Population, int>();
         List<Population> pops = rpm.getPops();
         foreach (Population pop in pops)
         {
-            popsByID.Add(pop.GetID(), pop);
+            popsByID.Add(rpm.PopToID[pop], pop);
         }
         GenerateDensityMap();
 
@@ -74,10 +78,11 @@ public class PopDensityManager : MonoBehaviour
             for (int i = 0; i < 64; i++)
             {
                 //the pop lives there, add its weight/tile to density
-                if (((popDensityMap[pos] >> i) & 1L) == 1L)
+                if (popsByID.ContainsKey(i) && ((popDensityMap[pos] >> i) & 1L) == 1L)
                 {
                     Population cur = popsByID[i];
-                    density += cur.GetWeight() / cur.GetSpace();
+                    //weight per tile
+                    density += cur.Species.Size*cur.Count / spaces[cur];
                 }
             }
             return density;
@@ -106,32 +111,60 @@ public class PopDensityManager : MonoBehaviour
     private void GenerateDensityMap(Population pop) {
         Vector3Int cellPos = rpm.WorldToCell(pop.transform.position);
 
-        //find the number of accessible tiles within radius (≈ living space) and populate Density Map
-        int radius = pop.radius;
+        //find the number of accessible tiles
         int space = 0;
-        //loop through each tile within radius
-        for (int x = -radius; x <= radius; x++)
+
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        List<Vector3Int> accessed = new List<Vector3Int>();
+        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        Vector3Int cur;
+
+        //starting location
+        Vector3Int location = rpm.WorldToCell(pop.transform.position);
+        stack.Push(location);
+
+        //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
+        while (stack.Count > 0)
         {
-            for (int y = -radius + Mathf.Abs(x); y <= radius - Mathf.Abs(x); y++)
+            //next point
+            cur = stack.Pop();
+
+            if (accessed.Contains(cur) || unaccessible.Contains(cur))
             {
-                Vector3Int pos = new Vector3Int(cellPos.x + x, cellPos.y + y, 0);
-                //if accessible, add space and add to density map
-                if (rpm.CanAccess(pop, pos))
+                //checked before, move on
+                continue;
+            }
+
+            if (rpm.CanAccess(pop, cur))
+            {
+                //save the Vector3Int since it is already checked
+                accessed.Add(cur);
+
+                space++;
+                if (popDensityMap.ContainsKey(cur))
                 {
-                    space++;
-                    if (popDensityMap.ContainsKey(pos))
-                    {
-                        popDensityMap[pos] |= 1L << pop.GetID();
-                    }
-                    else
-                    {
-                        popDensityMap.Add(pos, 1L << pop.GetID());
-                    }
+                    popDensityMap[cur] |= 1L << rpm.PopToID[pop];
                 }
+                else
+                {
+                    popDensityMap.Add(cur, 1L << rpm.PopToID[pop]);
+                }
+
+                //check all 4 tiles around, may be too expensive/awaiting optimization
+                stack.Push(cur + Vector3Int.left);
+                stack.Push(cur + Vector3Int.up);
+                stack.Push(cur + Vector3Int.right);
+                stack.Push(cur + Vector3Int.down);
+            }
+            else
+            {
+                //save the Vector3Int since it is already checked
+                unaccessible.Add(cur);
             }
         }
+
         //save the amount of space the pop has
-        pop.SetSpace(space);
+        spaces.Add(pop,space);
     }
 
     //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
@@ -140,26 +173,55 @@ public class PopDensityManager : MonoBehaviour
         if (!rpm.getPops().Contains(pop))
             return -1;
 
-        //calculate the number of accessible tiles within radius (≈ living space)
-        int radius = pop.radius;
+
+        //calculate the number of accessible tiles
         float density = 0;
-        //loop through each tile within radius, sum up weight from all of them
-        for (int x = -radius; x <= radius; x++)
+
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        List<Vector3Int> accessed = new List<Vector3Int>();
+        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        Vector3Int cur;
+
+        //starting location
+        Vector3Int location = rpm.WorldToCell(pop.transform.position);
+        stack.Push(location);
+
+        //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
+        while (stack.Count > 0)
         {
-            for (int y = -radius + Mathf.Abs(x); y <= radius - Mathf.Abs(x); y++)
+            //next point
+            cur = stack.Pop();
+
+            if (accessed.Contains(cur) || unaccessible.Contains(cur))
             {
-                Vector3Int pos = new Vector3Int(x, y, 0);
-                if (rpm.CanAccess(pop, pos))
-                {
-                    //add population density at the tile to density, note that density/tile * 1 tile = weight
-                    //so this is summing the weight at this point
-                    density += GetPopDensityAt(pos);
-                }
+                //checked before, move on
+                continue;
+            }
+
+            if (rpm.CanAccess(pop,cur))
+            {
+                //save the Vector3Int since it is already checked
+                accessed.Add(cur);
+
+                //add population density at the tile to density, note that density/tile * 1 tile = weight
+                //so this is summing the weight at this point
+                density += GetPopDensityAt(cur);
+
+                //check all 4 tiles around, may be too expensive/awaiting optimization
+                stack.Push(cur + Vector3Int.left);
+                stack.Push(cur + Vector3Int.up);
+                stack.Push(cur + Vector3Int.right);
+                stack.Push(cur + Vector3Int.down);
+            }
+            else
+            {
+                //save the Vector3Int since it is already checked
+                unaccessible.Add(cur);
             }
         }
 
         //total weight / tiles = density
-        density /= pop.GetSpace();
+        density /= spaces[pop];
         return density;
     }
 

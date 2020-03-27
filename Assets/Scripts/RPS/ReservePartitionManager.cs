@@ -11,18 +11,21 @@ public class ReservePartitionManager : MonoBehaviour
     //singleton
     public static ReservePartitionManager ins;
 
-    List<Population> pops;
-    Stack<int> openID;
-    Dictionary <Vector3Int, long> accessMap;
-    public FoodSource food;
+    public List<Population> Pops { get; private set; }
+    private Queue<int> openID;
+    public Dictionary<Population, int> PopToID { get; private set; }
+    private Dictionary <Vector3Int, long> accessMap;
+    public FoodSource food; //TODO to be removed, only for Demo purposes
 
     GetTerrainTile GTT; //GetTerrainTile API from Virgil
     Tilemap reference; //a reference tilemap for converting cell position
 
     public bool RPMDemo = false; //if in demo
 
+    int lastRecycledID;
+
     public List<Population> getPops() {
-        return pops;
+        return Pops;
     }
     public void Awake() {
         if (ins != null && this != ins)
@@ -34,11 +37,13 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         //long mask is limited to 64 bits
-        openID = new Stack<int>();
+        openID = new Queue<int>();
+        lastRecycledID = 63;
         for (int i = 63; i >= 0 ; i--) {
-            openID.Push(i);
+            openID.Enqueue(i);
         }
-        pops = new List<Population>();
+        Pops = new List<Population>();
+        PopToID = new Dictionary<Population, int>();
         accessMap = new Dictionary<Vector3Int, long>();
         GTT = FindObjectOfType<GetTerrainTile>();
         reference = GTT.GetComponent<TilePlacementController>().tilemapList[0];
@@ -48,7 +53,7 @@ public class ReservePartitionManager : MonoBehaviour
     {
         if (RPMDemo) //if in demo
         {
-            foreach (Population pop in pops)
+            foreach (Population pop in Pops)
                 if (CanAccess(pop, food.transform.position))
                 {
                     pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
@@ -60,10 +65,13 @@ public class ReservePartitionManager : MonoBehaviour
     ///Add a population to the RPM.
     ///</summary>
     public void AddPopulation(Population pop) {
-        if (!pops.Contains(pop)){
+        if (!Pops.Contains(pop)){
             //ignore their old id and assign it a new one
-            pop.SetID(openID.Pop());
-            pops.Add(pop);
+            int id = openID.Dequeue();
+            //since IDs after 63 are recycled, we need to do clean up old values
+            if (id == lastRecycledID) CleanupAccessMapForRecycledID();
+            PopToID.Add(pop, id);
+            Pops.Add(pop);
 
             //generate the map with the new id  
             GenerateMap(pop);
@@ -74,15 +82,29 @@ public class ReservePartitionManager : MonoBehaviour
     ///Remove a population from the RPM.
     ///</summary>
     public void RemovePopulation(Population pop) {
-        pops.Remove(pop);
-        openID.Push(pop.GetID()); //free ID
+        Pops.Remove(pop);
+        openID.Enqueue(PopToID[pop]);
+        PopToID.Remove(pop); //free ID
     }
 
+    ///<summary>
+    ///Called internally when ID is recycled.
+    ///</summary>
+    void CleanupAccessMapForRecycledID() {
+        foreach (int id in openID)
+        {
+            foreach (Vector3Int loc in accessMap.Keys) {
+                //set the values to 0 through bit masking
+                accessMap[loc] &= ~(1L << id);
+            }
+            lastRecycledID = id;
+        }
+    }
     ///<summary>
     ///Populate the access map for a population with depth first search.
     ///</summary>
     private void GenerateMap(Population pop) {
-        if (!pops.Contains(pop)) {
+        if (!Pops.Contains(pop)) {
             AddPopulation(pop);
         }
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
@@ -107,7 +129,7 @@ public class ReservePartitionManager : MonoBehaviour
             //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
             //implementation may change when liquid gets added
             TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
-            if (tile != null && pop.accessibleTerrain.Contains(tile.type))
+            if (tile != null && pop.Species.accessibleTerrain.Contains(tile.type))
             {
                 //save the Vector3Int since it is already checked
                 accessible.Add(cur);
@@ -129,16 +151,16 @@ public class ReservePartitionManager : MonoBehaviour
                 accessMap.Add(pos, 0L);
             }
             //set the pop.getID()th bit in accessMap[pos] to 1
-            accessMap[pos] |= 1L << pop.GetID();
+            accessMap[pos] |= 1L << PopToID[pop];
         }
     }
 
     ///<summary>
-    ///Update the access map for every population in pops
+    ///Update the access map for every population in Pops
     ///</summary>
     public void UpdateAccessMap()
     {
-        foreach (Population pop in pops)
+        foreach (Population pop in Pops)
         {
             GenerateMap(pop);
         }
@@ -167,7 +189,7 @@ public class ReservePartitionManager : MonoBehaviour
         //check if the nth bit is set (i.e. accessible for the pop)
         if (accessMap.ContainsKey(mapPos))
         {
-            if (((accessMap[mapPos] >> pop.GetID()) & 1L) == 1L)
+            if (((accessMap[mapPos] >> PopToID[pop]) & 1L) == 1L)
             {
                 return true;
             }
@@ -178,12 +200,12 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     ///<summary>
-    ///Go through pops and return a list of populations that has access to the tile corresponding to toWorldPos.
+    ///Go through Pops and return a list of populations that has access to the tile corresponding to toWorldPos.
     ///</summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         List<Population> accessible = new List<Population>();
-        foreach (Population pop in pops)
+        foreach (Population pop in Pops)
         {
             //utilize CanAccess()
             if (CanAccess(pop, toWorldPos))

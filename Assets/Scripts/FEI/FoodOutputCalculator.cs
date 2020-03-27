@@ -8,8 +8,11 @@ public class FoodOutputCalculator : MonoBehaviour
     /// <summary>
     /// Calculate the output of a food source given its food scriptable object and conditions
     /// </summary>
-    public static float CalculateOutput(FoodScriptableObject fso, int[] conditions){
-        return CalculateOutput(fso.getBaseOutput(), fso.getWeights(), fso.getTWeight(), conditions);
+    public static float CalculateOutput(FoodScriptableObject fso, NeedCondition[] conditions){
+        int[] intConditions = new int[conditions.Length];
+        //convert to int, 0 = bad, 1 = neutral, 2 = good
+        for (int i = 0; i < conditions.Length; i++) intConditions[i] = (int)conditions[i];
+        return CalculateOutput(fso.BaseOutput, fso.Severities, fso.TotalSeverity, intConditions);
     }
 
     /// <summary>
