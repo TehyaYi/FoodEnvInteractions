@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A better way to store the ranges. Read the files by dragging it into food prefabs.
+/// The scriptable object that stores all info shared by the plant species.
 /// </summary>
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/FoodScriptableObject", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "Food/Species", order = 1)]
 public class FoodScriptableObject : ScriptableObject
 {
     [Tooltip("Amount of output if all needs are moderately met.")]

@@ -37,12 +37,15 @@ public class PopDensityManager : MonoBehaviour
         {
             ins = this;
         }
+        rpm = ReservePartitionManager.ins;
+        popsByID = new Dictionary<int, Population>();
+        spaces = new Dictionary<Population, int>();
+        popDensityMap = new Dictionary<Vector3Int, long>();
     }
 
     public void Start()
     {
-        rpm = ReservePartitionManager.ins;
-        Invoke("Init", 0.1f);
+        Invoke("Init", 0.3f);
     }
 
     /// <summary>
@@ -50,18 +53,40 @@ public class PopDensityManager : MonoBehaviour
     /// Has to be separate from start to allow populations to be added to the rpm
     /// </summary>
     public void Init() {
-        popsByID = new Dictionary<int, Population>();
-        spaces = new Dictionary<Population, int>();
-        List<Population> pops = rpm.getPops();
-        foreach (Population pop in pops)
-        {
-            popsByID.Add(rpm.PopToID[pop], pop);
-        }
-        GenerateDensityMap();
-
         //graph the density map if in demo
         if(PDMDemo)
             Graph();
+    }
+
+    public void AddPop(Population pop) {
+        if (!rpm.Pops.Contains(pop))
+        {
+            Debug.LogError("Population " + pop.name + " is not a part of RPM!");
+            return;
+        }
+        else
+        {
+            popsByID.Add(rpm.PopToID[pop], pop);
+            GenerateDensityMap(pop);
+        }
+    }
+    public void RemovePop(Population pop) {
+        popsByID.Remove(rpm.PopToID[pop]);
+    }
+
+    /// <summary>
+    /// Exclusive to RPM. Cleanup the bits occupied by the recycled IDs.
+    /// </summary>
+    /// <param name="recycledID"></param>
+    public void CleanupDensityMap(int[] recycledID) {
+        foreach (int id in recycledID)
+        {
+            foreach (Vector3Int loc in popDensityMap.Keys)
+            {
+                //set the values to 0 through bit masking
+                popDensityMap[loc] &= ~(1L << id);
+            }
+        }
     }
 
     /// <summary>
@@ -81,6 +106,7 @@ public class PopDensityManager : MonoBehaviour
                 if (popsByID.ContainsKey(i) && ((popDensityMap[pos] >> i) & 1L) == 1L)
                 {
                     Population cur = popsByID[i];
+                    print(cur.Species.Size * cur.Count / spaces[cur]);
                     //weight per tile
                     density += cur.Species.Size*cur.Count / spaces[cur];
                 }
@@ -100,7 +126,7 @@ public class PopDensityManager : MonoBehaviour
     {
         popDensityMap = new Dictionary<Vector3Int, long>();
 
-        List<Population> pops = rpm.getPops();
+        List<Population> pops = rpm.Pops;
 
         foreach (Population pop in pops)
         {
@@ -109,8 +135,6 @@ public class PopDensityManager : MonoBehaviour
     }
 
     private void GenerateDensityMap(Population pop) {
-        Vector3Int cellPos = rpm.WorldToCell(pop.transform.position);
-
         //find the number of accessible tiles
         int space = 0;
 
@@ -149,7 +173,7 @@ public class PopDensityManager : MonoBehaviour
                 {
                     popDensityMap.Add(cur, 1L << rpm.PopToID[pop]);
                 }
-
+                
                 //check all 4 tiles around, may be too expensive/awaiting optimization
                 stack.Push(cur + Vector3Int.left);
                 stack.Push(cur + Vector3Int.up);
@@ -170,7 +194,7 @@ public class PopDensityManager : MonoBehaviour
     //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
     public float GetDensityScore(Population pop) {
         //not initialized
-        if (!rpm.getPops().Contains(pop))
+        if (!rpm.Pops.Contains(pop))
             return -1;
 
 

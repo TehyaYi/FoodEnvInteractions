@@ -6,8 +6,10 @@ using UnityEditor;
 
 public enum PlantNeedType { Terrain, RLiquid, YLiquid, BLiquid, GasX, GasY, GasZ, Temperature }
 
-
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/NeedScriptableObject", order = 1)]
+/// <summary>
+/// General Need object imported from the PopGrowth branch.
+/// </summary>
+[CreateAssetMenu(fileName = "Data", menuName = "Food/Need", order = 1)]
 public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptableObject>
 {
 	[SerializeField] private PlantNeedType type = default;

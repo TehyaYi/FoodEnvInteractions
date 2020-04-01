@@ -11,6 +11,9 @@ public class ReservePartitionManager : MonoBehaviour
     //singleton
     public static ReservePartitionManager ins;
 
+    //may change
+    public const int maxPop = 64;
+
     public List<Population> Pops { get; private set; }
     private Queue<int> openID;
     public Dictionary<Population, int> PopToID { get; private set; }
@@ -24,9 +27,6 @@ public class ReservePartitionManager : MonoBehaviour
 
     int lastRecycledID;
 
-    public List<Population> getPops() {
-        return Pops;
-    }
     public void Awake() {
         if (ins != null && this != ins)
         {
@@ -38,8 +38,8 @@ public class ReservePartitionManager : MonoBehaviour
 
         //long mask is limited to 64 bits
         openID = new Queue<int>();
-        lastRecycledID = 63;
-        for (int i = 63; i >= 0 ; i--) {
+        lastRecycledID = maxPop - 1; //63
+        for (int i = maxPop-1; i >= 0 ; i--) {
             openID.Enqueue(i);
         }
         Pops = new List<Population>();
@@ -75,13 +75,16 @@ public class ReservePartitionManager : MonoBehaviour
 
             //generate the map with the new id  
             GenerateMap(pop);
+            if(PopDensityManager.ins != null) PopDensityManager.ins.AddPop(pop);
         }
     }
 
     ///<summary>
     ///Remove a population from the RPM.
     ///</summary>
-    public void RemovePopulation(Population pop) {
+    public void RemovePopulation(Population pop)
+    {
+        if (PopDensityManager.ins != null) PopDensityManager.ins.RemovePop(pop);
         Pops.Remove(pop);
         openID.Enqueue(PopToID[pop]);
         PopToID.Remove(pop); //free ID
@@ -99,6 +102,7 @@ public class ReservePartitionManager : MonoBehaviour
             }
             lastRecycledID = id;
         }
+        if (PopDensityManager.ins != null) PopDensityManager.ins.CleanupDensityMap(openID.ToArray());
     }
     ///<summary>
     ///Populate the access map for a population with depth first search.
@@ -127,7 +131,6 @@ public class ReservePartitionManager : MonoBehaviour
             }
 
             //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
-            //implementation may change when liquid gets added
             TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
             if (tile != null && pop.Species.accessibleTerrain.Contains(tile.type))
             {
@@ -156,10 +159,11 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     ///<summary>
-    ///Update the access map for every population in Pops
+    ///Update the access map for every population in Pops.
     ///</summary>
     public void UpdateAccessMap()
     {
+        accessMap = new Dictionary<Vector3Int, long>();
         foreach (Population pop in Pops)
         {
             GenerateMap(pop);

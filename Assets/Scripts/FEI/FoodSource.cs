@@ -37,7 +37,7 @@ public class FoodSource : MonoBehaviour
         totalOutput = 0;
 
         if (species == null) {
-            print("Error: species is not set");
+            throw new System.NullReferenceException("Error: species is not set");
         }
 
         DetectEnvironment();
