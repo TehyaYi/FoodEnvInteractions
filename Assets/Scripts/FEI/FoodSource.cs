@@ -7,11 +7,11 @@ public class FoodSource : MonoBehaviour
 {
     //using enum to create a dropdown list
     public enum FoodTypes { SpaceMaple, Food2, Food3, Food4, Food5 };
-    [SerializeField] private FoodTypes type;
+    [SerializeField] private FoodTypes type = default;
     public FoodTypes Type { get => type; }
 
     //ScriptableObject to read from
-    [SerializeField] private FoodScriptableObject species;
+    [SerializeField] private FoodScriptableObject species = default;
     public FoodScriptableObject Species { get => species; }
 
     // For debugging, might be removed later
@@ -26,7 +26,7 @@ public class FoodSource : MonoBehaviour
     [SerializeField] private float totalOutput;
     public float TotalOutput { get => totalOutput; }
 
-    public GameManager gameManager;
+    public WorldAtmosphere atm;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,6 @@ public class FoodSource : MonoBehaviour
         }
 
         DetectEnvironment();
-        print("total_output: " + totalOutput);
     }
 
     /// <summary>
@@ -63,7 +62,7 @@ public class FoodSource : MonoBehaviour
                 {
                     case PlantNeedType.Terrain:
                         //get tiles around the food source and return as an array of integers
-                        TerrainTile[] terrainTiles = TileRetriever.GetTiles(transform.position, species.Radius).ToArray();
+                        TerrainTile[] terrainTiles = FoodUtils.GetTiles(transform.position, species.Radius).ToArray();
 
                         //quick check for no tiles read
                         if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
@@ -96,19 +95,19 @@ public class FoodSource : MonoBehaviour
                         break;
                     case PlantNeedType.GasX:
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGX();
+                        rawValues[i] = atm.getGX();
                         break;
                     case PlantNeedType.GasY:
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGY();
+                        rawValues[i] = atm.getGY();
                         break;
                     case PlantNeedType.GasZ:
                         //Read value from some class that handles atmosphere
-                        rawValues[i] = gameManager.getGZ();
+                        rawValues[i] = atm.getGZ();
                         break;
                     case PlantNeedType.Temperature:
                         //Read value from some class that handles temperature
-                        rawValues[i] = gameManager.getTemp();
+                        rawValues[i] = atm.getTemp();
                         break;
                     case PlantNeedType.RLiquid:
                         //TODO
@@ -166,6 +165,6 @@ public class FoodSource : MonoBehaviour
         }
 
         //calculate output based on conditions
-        totalOutput = FoodOutputCalculator.CalculateOutput(species, conditions);
+        totalOutput = FoodUtils.CalculateOutput(species, conditions);
     }
 }

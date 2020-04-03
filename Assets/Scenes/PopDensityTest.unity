@@ -4049,7 +4049,7 @@ GameObject:
   - component: {fileID: 734958179}
   - component: {fileID: 734958181}
   m_Layer: 0
-  m_Name: GM+RPM+DM
+  m_Name: RPM+DM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4093,7 +4093,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734958177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.40917, y: -50.938236, z: -15.809433}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4623,12 +4623,17 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 734958178}
+      objectReference: {fileID: 0}
     - target: {fileID: 357624510369086738, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: tileRetriever
       value: 
       objectReference: {fileID: 1843467895}
+    - target: {fileID: 357624510369086738, guid: 131a844610d1549898f86b7541e05501,
+        type: 3}
+      propertyPath: atm
+      value: 
+      objectReference: {fileID: 734958178}
     - target: {fileID: 357624510369086739, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_Name

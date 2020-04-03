@@ -6293,7 +6293,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 3.63e-43, z: 0, w: 38122336}
+  m_BoundingSphereOverride: {x: 1e-45, y: 3.85e-43, z: 0, w: -4.792983e+21}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -10947,7 +10947,7 @@ GameObject:
   - component: {fileID: 1205981852}
   - component: {fileID: 1205981854}
   m_Layer: 0
-  m_Name: GM+RPM
+  m_Name: Atmosphere+RPM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10977,7 +10977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205981851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.40917, y: -50.938236, z: -15.809433}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13192,6 +13192,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 4e4c6641b26a5457c9349021ee2101cf,
         type: 2}
+    - target: {fileID: 357624510369086738, guid: 131a844610d1549898f86b7541e05501,
+        type: 3}
+      propertyPath: atm
+      value: 
+      objectReference: {fileID: 1205981852}
     - target: {fileID: 357624510369086739, guid: 131a844610d1549898f86b7541e05501,
         type: 3}
       propertyPath: m_Name

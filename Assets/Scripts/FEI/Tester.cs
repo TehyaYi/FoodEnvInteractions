@@ -26,7 +26,7 @@ public class Tester : MonoBehaviour
     public void UpdateDebugMenu()
     {
         info.DetectEnvironment();
-        List<TerrainTile> ts = TileRetriever.GetTiles(transform.position, info.Species.Radius);
+        List<TerrainTile> ts = FoodUtils.GetTiles(transform.position, info.Species.Radius);
         counts = new Dictionary<string, int>();
         for (int i = 0; i < ts.Count; i++)
         {

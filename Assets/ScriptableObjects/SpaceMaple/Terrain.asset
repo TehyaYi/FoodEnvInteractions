@@ -16,5 +16,5 @@ MonoBehaviour:
   severity: 5
   conditions: 000000000100000002000000
   thresholds:
-  - 0.5
   - 1.5
+  - 2.5
